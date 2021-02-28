@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: gunicorn app:app -b 0.0.0.0:5000
+    volumes: []
+    ports:
+      - "5000:5000"
+    depends_on: []
