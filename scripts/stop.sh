@@ -1,2 +1,2 @@
 #!/bin/bash
-docker stop flask-image
+docker stop aws-practice

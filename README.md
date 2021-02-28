@@ -1,1 +1,1 @@
-# aws-dice
+# aws-practice
