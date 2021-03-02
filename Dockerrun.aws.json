@@ -1,0 +1,43 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [],
+  "containerDefinitions": [
+    {
+      "name": "eb-front",
+      "image": "charlociraptor/eb-front",
+      "environment": [
+        {
+          "name": "FOO",
+          "value": "BAR"
+        }
+      ],
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 5000
+        }
+      ],
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [],
+      "links": [
+        "eb-back"
+      ]
+    },
+    {
+      "name": "eb-back",
+      "image": "charlociraptor/eb-back",
+      "environment": [],
+      "portMappings": [
+        {
+          "hostPort": 5000,
+          "containerPort": 5000
+        }
+      ],
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [],
+      "links": []
+    }
+  ]
+}
