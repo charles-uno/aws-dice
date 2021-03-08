@@ -21,3 +21,7 @@ Possible to convert (more or less) `docker-compose.yml` to `Dockerrun.aws.json` 
 ## Dice Images
 
 Borrowed from [MiniFate](https://github.com/MiniFate/MiniFate), per Alex Gude
+
+## TODO
+
+`manifest.json`
