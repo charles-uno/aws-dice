@@ -12,9 +12,12 @@ Also: install the Elastic Beanstalk CLI. The web app is a mess. On Mac OS:
 brew update && brew install awsebcli
 ```
 
-
 Tutorial [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html) is helpful. Notably, Docker deploys don't use `appspec.yml`. Also notable that AWS documentation suggests you can run a deployment with `docker-compose.yml` but I was unable to get it to work.
 
 Also: the tutorial uses `Dockerrun.aws.json` version 1 syntax. For multiple containers, you need version 2.
 
-Possible to convert (more or less) `docker-compose.yml` to `Dockerrun.aws.json` with `container-transform` (installed via `pip3`). 
+Possible to convert (more or less) `docker-compose.yml` to `Dockerrun.aws.json` with `container-transform` (installed via `pip3`).
+
+## Dice Images
+
+Borrowed from [MiniFate](https://github.com/MiniFate/MiniFate), per Alex Gude

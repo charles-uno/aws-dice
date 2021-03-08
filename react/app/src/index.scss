@@ -126,3 +126,46 @@ a, a:focus, a:visited, a:hover {
     color: $text-color;
     a { color: $accent-color; &:hover { color: $text-color; } }
 }
+
+.dice-app {
+    margin: 50px;
+    padding: 50px;
+    border-radius: 20px;
+    background-color: $shadow-color;
+    text-align: center;
+}
+
+.dice-wrap {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.df {
+    width: 20%;
+}
+
+.button-wrap {
+    margin: 0px;
+    padding: 0;
+    border: 0;
+    width: 100%;
+}
+
+.roll-button {
+    margin: 50px 0;
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    color: $accent-color;
+    border: 2px solid $accent-color;
+    &:hover {
+        color: $text-color;
+        background-color: $accent-color;
+    }
+
+}

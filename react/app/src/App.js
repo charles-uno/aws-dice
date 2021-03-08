@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.scss';
-
 import React from 'react';
 import axios from 'axios';
+
 
 class DiceRoller extends React.Component {
 
@@ -11,25 +10,15 @@ class DiceRoller extends React.Component {
         this.state = {dice: [-2, -2, -2, -2]};
     }
 
-    componentDidMount() {}
-
     render() {
-        var dice_str = "";
+        var dice_elts = [];
         for (let d of this.state.dice) {
-            if (d === -1) {
-                dice_str += "[-]";
-            } else if (d === 0) {
-                dice_str += "[ ]";
-            } else if (d === 1) {
-                dice_str += "[+]";
-            } else {
-                dice_str += "[?]";
-            }
+            dice_elts.push(df(d));
         }
         return (
-            <div className="dice-wrapper">
-                <div className="dice">{dice_str}</div>
-                <button onClick={this.roll.bind(this)}>click me!</button>
+            <div className="dice-app">
+                <div className="dice-wrap">{dice_elts}</div>
+                <button className="roll-button" onClick={this.roll.bind(this)}>reroll</button>
             </div>
         );
     }
@@ -44,6 +33,24 @@ class DiceRoller extends React.Component {
         }
     }
 
+}
+
+
+function df(d) {
+    // Note: in theory, we should be attaching a key to each element in this
+    // list. But when we do that, React gets confused and draws additional dice
+    // instead of re-rolling
+    let uri = "/images/df-question.svg";
+    if (d === -1) {
+        uri = "/images/df-minus.svg";
+    } else if (d === 0) {
+        uri = "/images/df-zero.svg";
+    } else if (d === 1) {
+        uri = "/images/df-plus.svg";
+    }
+    return (
+        <img className="df" src={uri} alt="" />
+    )
 }
 
 
