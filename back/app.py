@@ -10,9 +10,6 @@ cors = flask_cors.CORS(app)
 
 @app.route("/")
 def roll_dice():
-    vals = [random.randrange(1, 7) for _ in range(3)]
+    vals = [random.randrange(-1, 2) for _ in range(4)]
     response = flask.jsonify(data=vals)
-#    response.headers.add("Access-Control-Allow-Origin", "*")
-#    response.headers.add("Access-Control-Allow-Headers", "*")
-#    response.headers.add("Access-Control-Allow-Methods", "*")
     return response, 200

@@ -8,21 +8,22 @@ class DiceRoller extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            dice: [],
-            isFetching: true
-        };
+        this.state = {dice: [-2, -2, -2, -2]};
     }
 
     componentDidMount() {}
 
     render() {
         var dice_str = "";
-        if (this.state.isFetching) {
-            dice_str = "[?][?][?]";
-        } else {
-            for (let d of this.state.dice) {
-                dice_str += "[" + d.toString() + "]";
+        for (let d of this.state.dice) {
+            if (d === -1) {
+                dice_str += "[-]";
+            } else if (d === 0) {
+                dice_str += "[ ]";
+            } else if (d === 1) {
+                dice_str += "[+]";
+            } else {
+                dice_str += "[?]";
             }
         }
         return (
@@ -35,12 +36,11 @@ class DiceRoller extends React.Component {
 
     async roll(state) {
         try {
-            this.setState({isFetching: true});
+            this.setState({dice: [-2, -2, -2, -2]});
             const response = await axios.get("http://localhost:5000");
-            this.setState({dice: response.data.data, isFetching: false});
+            this.setState({dice: response.data.data});
         } catch (e) {
             console.log(e);
-            this.setState({isFetching: false});
         }
     }
 
