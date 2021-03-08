@@ -5,12 +5,7 @@
     {
       "name": "eb-front",
       "image": "charlociraptor/eb-front",
-      "environment": [
-        {
-          "name": "FOO",
-          "value": "BAR"
-        }
-      ],
+      "environment": [],
       "portMappings": [
         {
           "hostPort": 80,
