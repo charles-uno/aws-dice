@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 import React from 'react';
 import axios from 'axios';
@@ -27,8 +27,8 @@ class DiceRoller extends React.Component {
             }
         }
         return (
-            <div>
-                <p>{dice_str}</p>
+            <div className="dice-wrapper">
+                <div className="dice">{dice_str}</div>
                 <button onClick={this.roll.bind(this)}>click me!</button>
             </div>
         );

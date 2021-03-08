@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+$sans-font: 'Roboto', sans-serif;
+$mono-font: 'Cutive Mono', monospace;
+$head-font: 'Fredoka One', cursive;
+$logo-font: $head-font;
+
+$text-color: #222;
+$paper-color: #ddd;
+$shadow-color: #fff;
+$accent-color: #069;
+
+$fs-logo: 35px;
+$fs-tags: 18px;
+$fs-glyph: 30px;
+$fs-index: 26px;
+$fs-title: 30px;
+$fs-subtitle: 18px;
+$fs-body: 16px;
+$fs-caption: 12px;
+
+$head-tag-pad: 10px;
+$head-pad: 10px;
+$copy-height: 74px;
+$head-height: $fs-glyph + 2*$head-pad;
+
+$paper-width: 900px;
+$text-width: 550px;
+$tile-pad: 16px;
+$side-pad: 12px;
+$shadow-size: 10px;
+
+$sans-font: 'Roboto', sans-serif;
+$mono-font: 'Cutive Mono', monospace;
+$head-font: 'Fredoka One', cursive;
+$logo-font: $head-font;
+
+$content-width: 800px;
+
+
+a {
+    text-decoration: none;
+}
+
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: $shadow-color;
+    font-family: $sans-font;
+}
+
+a, a:focus, a:visited, a:hover {
+    text-decoration: none;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+
+.head {
+    width: 100%;
+    background-color: $accent-color;
+    font-family: $logo-font;
+    font-size: $fs-logo;
+    color: $shadow-color;
+    -webkit-box-shadow: rgba(0,0,0,0.8) 0px 0 $shadow-size;
+    -moz-box-shadow: rgba(0,0,0,0.8) 0 0 $shadow-size;
+    box-shadow: rgba(0,0,0,0.8) 0 0 $shadow-size;
+    z-index: 99;
+    top: 0px;
+    position: fixed;
+    a {
+        display: block;
+        width: 100%;
+        max-width: $paper-width;
+        margin: 0 auto;
+        padding: 0 $side-pad;
+        color: $paper-color;
+        &:hover { color: $text-color; }
+    }
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    max-width: $paper-width;
+
+    padding: ($head-height+$side-pad) $side-pad;
+
+    margin: 0 auto;
+    background-color: $paper-color;
+    position: relative;
+    top: 0px;
+}
+
+.foot {
+    display: block;
+    text-align: center;
+    font-size: $fs-caption;
+    padding: ($copy-height - $fs-caption)/2;
+    line-height: 1;
+    height: $copy-height;
+    vertical-align: middle;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    right: 0px;
+    color: $text-color;
+    a { color: $accent-color; &:hover { color: $text-color; } }
+}
