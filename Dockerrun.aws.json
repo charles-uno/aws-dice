@@ -3,12 +3,30 @@
   "volumes": [],
   "containerDefinitions": [
     {
+      "name": "eb-nginx",
+      "image": "charlociraptor/eb-nginx",
+      "environment": [],
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 80
+        }
+      ],
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [],
+      "links": [
+        "eb-front",
+        "eb-back"
+      ]
+    },
+    {
       "name": "eb-front",
       "image": "charlociraptor/eb-front",
       "environment": [],
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 5000,
           "containerPort": 5000
         }
       ],
@@ -25,7 +43,7 @@
       "environment": [],
       "portMappings": [
         {
-          "hostPort": 5000,
+          "hostPort": 5001,
           "containerPort": 5000
         }
       ],

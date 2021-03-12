@@ -6,6 +6,11 @@ STAMP=$(date +%s)
 for DF in */Dockerfile; do
     if [[ ! -f "$DF" ]]; then break; fi
     SERVICE_NAME=$(dirname "$DF")
+    if [[ "$@" != "" && "$@" != *"$SERVICE_NAME"* ]]; then
+        echo "skipping $SERVICE_NAME"
+        continue
+    fi
+    echo "building $SERVICE_NAME"
     cd "$SERVICE_NAME"
     IMAGE_NAME="$DOCKER_USERNAME/eb-$SERVICE_NAME"
     docker build . -t "$IMAGE_NAME:$STAMP"
