@@ -5,5 +5,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install flask flask-cors uwsgi
 WORKDIR /
 COPY app.py /app.py
-EXPOSE 5000
-CMD ["uwsgi", "--http", "0.0.0.0:5000", "--module", "app:app" ]
+EXPOSE 5001
+CMD ["/app.py"]
+
+# CMD ["uwsgi", "--http", "0.0.0.0:5001", "--module", "app:app" ]

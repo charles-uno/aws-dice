@@ -24,12 +24,9 @@ class DiceRoller extends React.Component {
     }
 
     async roll() {
-        // For the Flask front end, I was able to use http://eb-back:5000 as
-        // the address, per the links defined in Dockerrun.aws.json
-        // The same does not seem to work here
         try {
             this.setState({dice: [-2, -2, -2, -2]});
-            const response = await axios.get(`http://eb-back:5001`);
+            const response = await axios.get(`http://eb-back:5001/api`);
             this.setState({dice: response.data.data});
         } catch (e) {
             console.log(e);
