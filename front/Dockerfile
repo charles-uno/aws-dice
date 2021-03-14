@@ -6,5 +6,7 @@ RUN npm install
 RUN npm install axios node-sass --save
 RUN npm run build
 RUN npm install -g serve
+# For debugging Docker network stuff
+RUN apk --no-cache add curl
 EXPOSE 5000
 CMD ["serve", "-s", "build"]

@@ -26,7 +26,7 @@ class DiceRoller extends React.Component {
     async roll() {
         try {
             this.setState({dice: [-2, -2, -2, -2]});
-            const response = await axios.get(`http://eb-back:5001/api`);
+            const response = await axios.get(`/api`);
             this.setState({dice: response.data.data});
         } catch (e) {
             console.log(e);
