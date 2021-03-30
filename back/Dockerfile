@@ -1,12 +1,11 @@
-FROM ubuntu
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y python3-pip
-RUN pip3 install --upgrade pip
-RUN pip3 install flask flask-cors uwsgi
-WORKDIR /
-COPY app.py /app.py
-EXPOSE 5001
-CMD ["uwsgi", "--http", "0.0.0.0:5001", "--module", "app:app" ]
-
-# Debug mode
-# CMD ["/app.py"]
+FROM golang
+RUN go get github.com/charles-uno/mtgserver
+RUN cd pkg/mod/github.com/charles-uno/mtgserver* && go build main.go
+RUN mkdir -p /app
+RUN cp -p \
+    pkg/mod/github.com/charles-uno/mtgserver*/main \
+    pkg/mod/github.com/charles-uno/mtgserver*/carddata.yaml \
+    pkg/mod/github.com/charles-uno/mtgserver*/decklist.txt \
+    /app
+WORKDIR /app
+CMD ["./main"]

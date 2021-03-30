@@ -37,8 +37,7 @@ $head-pad: 10px;
 $copy-height: 74px;
 $head-height: $fs-glyph + 2*$head-pad;
 
-$paper-width: 900px;
-$text-width: 550px;
+$paper-width: 1200px;
 $tile-pad: 16px;
 $side-pad: 12px;
 $shadow-size: 10px;
@@ -47,8 +46,6 @@ $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
 $head-font: 'Fredoka One', cursive;
 $logo-font: $head-font;
-
-$content-width: 800px;
 
 
 a {
@@ -127,7 +124,7 @@ a, a:focus, a:visited, a:hover {
     a { color: $accent-color; &:hover { color: $text-color; } }
 }
 
-.dice-app {
+.main-app {
     margin: 50px;
     padding: 50px;
     border-radius: 20px;
@@ -135,7 +132,7 @@ a, a:focus, a:visited, a:hover {
     text-align: center;
 }
 
-.dice-wrap {
+.hand-wrap {
     margin: 0;
     padding: 0;
     border: 0;
@@ -155,11 +152,11 @@ a, a:focus, a:visited, a:hover {
     width: 100%;
 }
 
-.roll-button {
+.draw-button {
     margin: 50px 0;
     height: 50px;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 20px;
     color: $accent-color;
     border: 2px solid $accent-color;
@@ -167,5 +164,8 @@ a, a:focus, a:visited, a:hover {
         color: $text-color;
         background-color: $accent-color;
     }
+}
 
+.hand-card {
+    width: 14%;
 }
