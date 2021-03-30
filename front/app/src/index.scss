@@ -132,7 +132,7 @@ a, a:focus, a:visited, a:hover {
     text-align: center;
 }
 
-.hand-wrap {
+.hand-wrap, .play-wrap {
     margin: 0;
     padding: 0;
     border: 0;
@@ -152,7 +152,7 @@ a, a:focus, a:visited, a:hover {
     width: 100%;
 }
 
-.draw-button {
+.draw-button, .play-button {
     margin: 50px 0;
     height: 50px;
     width: 100%;
