@@ -8,11 +8,12 @@ class Flashcards extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hand: ["back", "back", "back", "back", "back", "back", "back"],
-            library: [],
+            hand: null,
+            library: null,
             on_the_play: null,
-            plays: [],
-            success: null
+            plays: null,
+            success: null,
+            waiting: false
         };
     }
 
@@ -23,24 +24,65 @@ class Flashcards extends React.Component {
         // TODO: clean up formatting, of course
 
         return (
-            <div className="main-app">
-                <button className="draw-button" onClick={this.drawNewHand.bind(this)}>draw a new hand</button>
-                <div className="hand-wrap">{this.renderHand()}</div>
-                <div className="otp-wrap">{this.renderOTP()}</div>
-
-                <button className="draw-button" onClick={this.getSequencing.bind(this)}>play it out</button>
-                <div className="play-wrap">{this.renderSequencing()}</div>
+            <div className="main">
+                {this.renderHand()}
+                {this.renderPlay()}
             </div>
         );
     }
 
     renderHand() {
-        let imgs = [];
-        for (let i in this.state.hand) {
-            let uri = "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + this.state.hand[i];
-            imgs.push(
-                <img className="hand-card" src={uri} alt={this.state.hand[i]} key={i}/>
+        return (
+            <div className="hand-wrap">
+                {this.renderHandButton()}
+                <div className="hand-cards">{this.renderHandImages()}</div>
+                <div className="hand-otp">{this.renderOTP()}</div>
+            </div>
+        );
+    }
+
+    renderHandButton() {
+        if (this.state.waiting) {
+            return <button className="button button-disabled" disabled="true">working...</button>
+        } else {
+            return <button className="button" onClick={this.getNewHand.bind(this)}>draw a new hand</button>
+        }
+    }
+
+    renderPlay() {
+        if (this.state.hand == null) {
+            return "";
+        } else {
+            return (
+                <div className="play-wrap">
+                    {this.renderPlayButton()}
+                    <div className="hand-cards">{this.renderPlaySteps()}</div>
+                </div>
             );
+        }
+    }
+
+    renderPlayButton() {
+        if (this.state.waiting) {
+            return <button className="button button-disabled" disabled={true}>working...</button>
+        } else {
+            return <button className="button" onClick={this.getNewPlay.bind(this)}>play it out</button>
+        }
+    }
+
+    renderHandImages() {
+        let imgs = [];
+        for (let i=0; i<7; i++) {
+            if (this.state.hand == null) {
+                imgs.push(
+                    <img className="hand-card" src={this.cardUri("back")} alt="card back" key={i}/>
+                );
+            } else {
+                let c = this.state.hand[i];
+                imgs.push(
+                    <img className="hand-card" src={this.cardUri(c)} alt="card back" key={i}/>
+                );
+            }
         }
         return imgs;
     }
@@ -55,7 +97,10 @@ class Flashcards extends React.Component {
         }
     }
 
-    renderSequencing() {
+    renderPlaySteps() {
+        if (this.state.plays == null) {
+            return "";
+        }
         let plays = "";
         for (let tag of this.state.plays) {
             plays += tag.text;
@@ -63,8 +108,12 @@ class Flashcards extends React.Component {
         return plays
     }
 
-    async drawNewHand() {
-        this.setState({hand: ["back", "back", "back", "back", "back", "back", "back"]});
+    async getNewHand() {
+        this.setState({
+            hand: null,
+            plays: null,
+            waiting: true
+        });
         try {
             const response = await axios.get(`http://localhost:5001/api/hand`);
             this.setState({
@@ -75,10 +124,11 @@ class Flashcards extends React.Component {
         } catch (e) {
             console.log(e);
         }
+        this.setState({waiting: false});
     }
 
-    async getSequencing() {
-        this.setState({plays: []});
+    async getNewPlay() {
+        this.setState({plays: null, waiting: true});
         try {
             let payload = {
                 hand: this.state.hand,
@@ -92,12 +142,16 @@ class Flashcards extends React.Component {
         } catch (e) {
             console.log(e);
         }
+        this.setState({waiting: false});
     }
 
-
-
+    cardUri(c) {
+        return "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + c;
+    }
 
 }
+
+
 
 
 export default Flashcards;
