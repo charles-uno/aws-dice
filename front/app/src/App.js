@@ -8,48 +8,46 @@ class Flashcards extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            opener: null,
-            plays: null,
-            success: null,
-            waiting: false,
             autocard: {name: null, style: {}},
+            opener: null,
+            gameplay: null,
+            waiting: false,
+            error: {location: null, text: null}
         };
     }
 
     render() {
-        return (
-            <div className="main-wrap">
-                {this.renderAutocard()}
-                <div className="main">
-                    {this.renderHand()}
-                    {this.renderPlay()}
-                </div>
+        return <div className="main-wrap">
+            {this.renderAutocard()}
+            <div className="main">
+                {this.renderHand()}
+                {this.renderPlay()}
             </div>
-        );
+        </div>
     }
 
     renderAutocard() {
         let uri = this.cardUri(this.state.autocard.name);
-        let autocard = <img className="autocard" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
+        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
         var wrapStyle = {display: "none"};
         if (this.state.autocard.name != null) {
             wrapStyle = {display: "block"};
         }
-        return (
-            <div className="autocard-wrap" style={wrapStyle} onClick={this.hideAutocard.bind(this)}>
-                {autocard}
-            </div>
-        );
+        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)}>
+            {autocard}
+        </div>
     }
 
     renderHand() {
-        return (
-            <div className="hand-wrap">
-                {this.renderHandButton()}
-                <div className="hand-cards">{this.renderHandImages()}</div>
-                {this.renderTurnOrder()}
+        return <div className="hand-wrap">
+            {this.renderHandButton()}
+            <div className="hand-cards-wrap">
+                <div className="hand-cards">
+                    {this.renderHandImages()}
+                </div>
             </div>
-        );
+            {this.renderHandText()}
+        </div>
     }
 
     renderHandButton() {
@@ -57,27 +55,6 @@ class Flashcards extends React.Component {
             return <button className="button button-disabled" disabled={true}>working...</button>
         } else {
             return <button className="button" onClick={this.getNewHand.bind(this)}>draw a new opener</button>
-        }
-    }
-
-    renderPlay() {
-        if (this.state.opener === null) {
-            return "";
-        } else {
-            return (
-                <div className="play-wrap">
-                    {this.renderPlayButton()}
-                    {this.renderPlayLines()}
-                </div>
-            );
-        }
-    }
-
-    renderPlayButton() {
-        if (this.state.waiting) {
-            return <button className="button button-disabled" disabled={true}>working...</button>
-        } else {
-            return <button className="button" onClick={this.getNewPlay.bind(this)}>play it out</button>
         }
     }
 
@@ -98,7 +75,12 @@ class Flashcards extends React.Component {
         return imgs;
     }
 
-    renderTurnOrder() {
+    renderHandText() {
+        if (this.state.error.location === "opener") {
+            return <div className="error-message vertical-center">
+                {this.state.error.text}
+            </div>
+        }
         let text = "";
         if (this.state.opener === null) {
             text = "";
@@ -107,16 +89,41 @@ class Flashcards extends React.Component {
         } else if (this.state.opener.onThePlay === false) {
             text = "on the draw";
         }
-        return <div className="hand-otp">{text}</div>
+        return <div className="turn-order">{text}</div>
+    }
+
+    renderPlay() {
+        if (this.state.opener === null) {
+            return "";
+        }
+        return <div className="play-wrap">
+            {this.renderPlayButton()}
+            {this.renderPlayLines()}
+            {this.renderPlayOutcome()}
+        </div>
+    }
+
+    renderPlayButton() {
+        if (this.state.waiting) {
+            return <button className="button button-disabled" disabled={true}>working...</button>
+        } else {
+            return <button className="button" onClick={this.getNewPlay.bind(this)}>play it out</button>
+        }
     }
 
     renderPlayLines() {
-        if (this.state.plays === null) {
+        if (this.state.error.location === "gameplay") {
+            console.log("gameplay error!");
+            return <div className="error-message">
+                {this.state.error.text}
+            </div>
+        }
+        if (this.state.gameplay === null) {
             return "";
         }
         let linesRaw = [];
         linesRaw.push([]);
-        for (let tag of this.state.plays) {
+        for (let tag of this.state.gameplay.plays) {
             if (tag.type === "break") {
                 linesRaw.push([]);
             } else {
@@ -158,6 +165,16 @@ class Flashcards extends React.Component {
         return <p className="play-line" key={key}>{words}</p>
     }
 
+    renderPlayOutcome() {
+        let text = "no solution before turn 5";
+        if (this.state.gameplay === null) {
+            text = "";
+        } else if (this.state.gameplay.turn > 0) {
+            text = "done on turn " + this.state.gameplay.turn.toString();
+        }
+        return <div className="play-outcome">{text}</div>
+    }
+
     showAutocard(cardName) {
         this.setState({
             autocard: {name: cardName, style: {display: true}}
@@ -185,32 +202,37 @@ class Flashcards extends React.Component {
     async getNewHand() {
         this.setState({
             opener: null,
-            plays: null,
-            waiting: true
+            gameplay: null,
+            waiting: true,
+            error: {location: null, text: null}
         });
         try {
             const response = await axios.get(`http://localhost:5001/api/hand`);
-            this.setState({
-                opener: {
-                    hand: response.data.hand,
-                    library: response.data.library,
-                    onThePlay: response.data.on_the_play
-                }
-            });
+            this.setState({opener: response.data});
         } catch (err) {
             console.log(err);
+            this.setState({
+                error: {location: "opener", text: err.toString()}
+            });
         }
         this.setState({waiting: false});
     }
 
     async getNewPlay() {
-        this.setState({plays: null, waiting: true});
+        this.setState({
+            gameplay: null,
+            error: {location: null, text: null},
+            waiting: true
+        });
         try {
             let payload = this.state.opener;
             const response = await axios.post(`http://localhost:5001/api/play`, payload);
-            this.setState({plays: response.data.plays});
+            this.setState({gameplay: response.data});
         } catch (err) {
             console.log(err);
+            this.setState({
+                error: {location: "gameplay", text: err.toString()}
+            });
         }
         this.setState({waiting: false});
     }
@@ -219,7 +241,7 @@ class Flashcards extends React.Component {
         if (c === null) {
             c = "back";
         }
-        return "http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + c;
+        return "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + c;
     }
 
     manaUri(m) {

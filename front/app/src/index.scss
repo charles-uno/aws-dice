@@ -24,23 +24,21 @@ $shadow-color: #fff;
 $accent-color: #069;
 
 $fs-logo: 35px;
-$fs-tags: 18px;
-$fs-glyph: 30px;
-$fs-index: 26px;
-$fs-title: 30px;
-$fs-subtitle: 18px;
+$fs-button: 24px;
 $fs-body: 16px;
+$fs-tldr: 26px;
 $fs-caption: 12px;
 
 $head-tag-pad: 10px;
 $head-pad: 10px;
 $copy-height: 74px;
-$head-height: $fs-glyph + 2*$head-pad;
+$head-height: $fs-logo + 2*$head-pad;
 
 $paper-width: 1200px;
-$tile-pad: 16px;
 $side-pad: 12px;
 $shadow-size: 10px;
+$margin-inner: 20px;
+$margin-around: 25px;
 
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
@@ -125,40 +123,25 @@ a, a:focus, a:visited, a:hover {
     right: 0px;
     color: $text-color;
     a { color: $accent-color; &:hover { color: $text-color; } }
-}
-
-.hand-wrap, .play-wrap {
-    margin: 50px;
-    padding: 50px;
-    border-radius: 20px;
-    background-color: $shadow-color;
-    text-align: center;
-}
-
-.hand-cards {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    border: 1px solid red;
 }
 
 .button-wrap {
-    margin: 0px;
+    margin: $margin-inner 0;
     padding: 0;
     border: 0;
     width: 100%;
 }
 
 .button {
-    margin: 50px 0;
+    margin: 0;
+    padding: 0px;
+    border: 2px solid $accent-color;
     height: 50px;
     width: 100%;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: $fs-button;
     color: $accent-color;
-    border: 2px solid $accent-color;
 }
 
 .button:not(.button-disabled) {
@@ -168,12 +151,50 @@ a, a:focus, a:visited, a:hover {
     }
 }
 
+.hand-wrap, .play-wrap {
+    margin: $margin-around;
+    padding: $margin-inner;
+    border-radius: 20px;
+    background-color: $shadow-color;
+    text-align: center;
+    border: 1px solid green;
+}
+
+.error-message, .play-outcome, .turn-order {
+    margin: $margin-inner 0;
+    border: 1px solid magenta;
+    font-size: $fs-tldr;
+    width: 100%;
+    height: $fs-tldr + $margin-inner;
+}
+
+.hand-cards-wrap {
+    margin: $margin-inner 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    /* Percentage is relative to the width. Enforces aspect ratio. */
+    padding-top: 19.5%;
+    position: relative;
+    border: 1px solid blue;
+}
+
+.hand-cards {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
 .hand-card {
     width: 14%;
 }
 
 .play-lines {
+    margin: $margin-inner 0;
     border: 1px solid red;
+    font-size: $fs-body;
 }
 
 .play-line {
@@ -198,14 +219,24 @@ a, a:focus, a:visited, a:hover {
 }
 
 .autocard {
-    position: relative;
     z-index: 999;
     width: 500px;
     max-width: 50%;
     border-radius: 5%;
     overflow: hidden;
+}
+
+.center-outer {
+    position: absolute;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.center-inner {
+    position: relative;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    border: 1px solid magenta;
 }
