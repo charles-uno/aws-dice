@@ -56,7 +56,7 @@ class Flashcards extends React.Component {
         if (this.state.waiting) {
             return <button className="button button-disabled" disabled={true}>working...</button>
         } else {
-            return <button className="button" onClick={this.getNewHand.bind(this)}>draw a new hand</button>
+            return <button className="button" onClick={this.getNewHand.bind(this)}>draw a new opener</button>
         }
     }
 
@@ -101,7 +101,7 @@ class Flashcards extends React.Component {
     renderTurnOrder() {
         let text = "";
         if (this.state.opener === null) {
-            text = "...";
+            text = "";
         } else if (this.state.opener.onThePlay === true) {
             text = "on the play";
         } else if (this.state.opener.onThePlay === false) {
@@ -124,16 +124,19 @@ class Flashcards extends React.Component {
             }
         }
         let lines = [];
-        for (let lr of linesRaw) {
-            lines.push(this.renderPlayLine(lr));
+        for (let i in linesRaw) {
+            if (linesRaw[i].length > 0) {
+                lines.push(this.renderPlayLine(linesRaw[i], i));
+            }
         }
         return <div className="play-lines">{lines}</div>
     }
 
-    renderPlayLine(lineRaw) {
+    renderPlayLine(lineRaw, lineNumber) {
         let words = [];
-        let key = 0;
-        for (let wordRaw of lineRaw) {
+        for (let i in lineRaw) {
+            let key = "line-" + lineNumber.toString() + "-word-" + i.toString();
+            let wordRaw = lineRaw[i];
             if (wordRaw.type === "mana") {
                 for (let symbol of this.renderMana(wordRaw.text, key)) {
                     words.push(symbol);
@@ -151,7 +154,8 @@ class Flashcards extends React.Component {
             }
             key += 1;
         }
-        return <p className="play-line">{words}</p>
+        let key = "line-" + lineNumber.toString();
+        return <p className="play-line" key={key}>{words}</p>
     }
 
     showAutocard(cardName) {
