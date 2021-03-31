@@ -53,9 +53,10 @@ a {
 }
 
 
-html, body {
+html, body, #root {
     width: 100%;
     height: 100%;
+    background-color: blue;
     margin: 0;
     padding: 0;
     border: 0;
@@ -70,7 +71,6 @@ a, a:focus, a:visited, a:hover {
 *, *:before, *:after {
     box-sizing: border-box;
 }
-
 
 .head {
     width: 100%;
@@ -93,6 +93,11 @@ a, a:focus, a:visited, a:hover {
         color: $paper-color;
         &:hover { color: $text-color; }
     }
+}
+
+.main-wrap {
+    width: 100%;
+    height: 100%;
 }
 
 .main {
@@ -163,9 +168,44 @@ a, a:focus, a:visited, a:hover {
     }
 }
 
-
-
-
 .hand-card {
     width: 14%;
+}
+
+.play-lines {
+    border: 1px solid red;
+}
+
+.play-line {
+    text-align: left;
+    border: 1px solid green;
+}
+
+.card {
+    border-radius: 3px;
+    border: 1px solid #bbb;
+    background: #ddd;
+}
+
+.autocard-wrap {
+    position: absolute;
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    text-align: center;
+}
+
+.autocard {
+    position: relative;
+    z-index: 999;
+    width: 500px;
+    max-width: 50%;
+    border-radius: 5%;
+    overflow: hidden;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border: 1px solid magenta;
 }
