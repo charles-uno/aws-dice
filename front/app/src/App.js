@@ -18,8 +18,8 @@ class Flashcards extends React.Component {
 
     render() {
         return [
-            this.renderMain(),
-            this.renderAutocard()
+            this.renderAutocard(),
+            this.renderMain()
         ];
     }
 
@@ -28,6 +28,7 @@ class Flashcards extends React.Component {
             <div className="article">
                 {this.renderHand()}
                 {this.renderPlay()}
+                <div className="foot-push"></div>
             </div>
             {this.renderFoot()}
         </div>
