@@ -37,7 +37,7 @@ HASH_REMOTE=$(ssh_helper 'cat ~/hash.txt')
 if [[ "$HASH_REMOTE" == "" ]]; then
     BUILD_DIRS=$(ls */Dockerfile | cut -d '/' -f 1)
 else
-    BUILD_DIRS=$(git diff "$HASH_REMOTE" --name-only | cut -d '/' -f 1 2>/dev/null)
+    BUILD_DIRS=$(git diff "$HASH_REMOTE" --name-only | grep '/' | cut -d '/' -f 1 2>/dev/null)
 fi
 
 echo "local hash: $HASH_LOCAL"
