@@ -7,32 +7,40 @@ STAMP=$(date +%s)
 
 ADDRESS="$1"
 if [[ "$ADDRESS" == "" ]]; then
-    echo "please give the address of your instance"
+    echo "please give the address of your instance (or localhost)"
     exit 1
 else
-    echo "setting up aws instance at $ADDRESS"
+    echo "deploying to $ADDRESS"
 fi
 
 KEYFILE="$2"
-if [[ "$KEYFILE" != "" ]]; then
-    echo "using aws key file: $KEYFILE"
+if [[ "$ADDRESS" == "localhost" ]]; then
+    echo "no key file needed for local deployment"
+elif [[ "$KEYFILE" != "" ]]; then
+    echo "using key file: $KEYFILE"
 else
     KEYFILE=$(ls ~/.ssh/Lightsail*.pem | head -n 1)
     if [[ "$KEYFILE" == "" ]]; then
-        echo "please provide an aws key file"
+        echo "please provide a key file"
         exit 1
     else
-        echo "found aws key file: $KEYFILE"
+        echo "found key file: $KEYFILE"
     fi
 fi
 
 function ssh_helper {
-    timeout 10 ssh -i "$KEYFILE" ec2-user@"$ADDRESS" "$@"
+    if [[ "$ADDRESS" == "localhost" ]]; then
+        $@
+    else
+        timeout 10 ssh -i "$KEYFILE" ec2-user@"$ADDRESS" "$@"
+    fi
 }
 
 function scp_helper {
-    # Just copy everything into the home directory
-    timeout 10 scp -i "$KEYFILE" "$@" ec2-user@"$ADDRESS":"~"
+    if [[ "$ADDRESS" != "localhost" ]]; then
+        # Just copy everything into the home directory
+        timeout 10 scp -i "$KEYFILE" "$@" ec2-user@"$ADDRESS":"~"
+    fi
 }
 
 # Easier to judge what's stale if we're up to date in Git
@@ -42,7 +50,7 @@ git add docker-compose.yml $COMMIT_DIRS
 git commit -m "pre-deploy commit" >/dev/null ||:
 
 HASH_LOCAL=$(git rev-parse HEAD)
-HASH_REMOTE=$(ssh_helper 'cat ~/hash.txt' 2>/dev/null ||:)
+HASH_REMOTE=$(ssh_helper 'cat hash.txt' 2>/dev/null ||:)
 # Only need to rebuild things that have changed since the last commit we
 # deployed. If there's no remote hash, rebuild everything
 if [[ "$HASH_REMOTE" == "" ]]; then
@@ -62,6 +70,9 @@ for DIR in $COMMIT_DIRS; do
         continue
     fi
     echo "$DIR : building..."
+
+    continue
+
     SERVICE_NAME="$DIR"
     IMAGE_NAME="$DOCKER_USERNAME/flashcards-$SERVICE_NAME"
     if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP" >/dev/null 2>&1; then
@@ -76,16 +87,18 @@ done
 # Copy files over
 echo "copying files over..."
 scp_helper docker-compose.yml
-ssh_helper "echo $HASH_LOCAL > ~/hash.txt"
+echo "$HASH_LOCAL" > hash.txt
+scp_helper hash.txt
 
 # Make sure we have access to docker-compose
 if ssh_helper 'command -v docker-compose' >/dev/null; then
     echo "verified docker-compose is installed"
 else
+    if [[ "$ADDRESS" == "localhost" ]]; then
+        echo "ERROR: please install docker-compose"
+        exit 1
+    fi
     echo "installing docker on $ADDRESS"
-
-    exit
-
     ssh_helper 'sudo amazon-linux-extras install -y docker' >/dev/null
     ssh_helper 'sudo service docker start' >/dev/null
     ssh_helper 'sudo usermod -a -G docker ec2-user' >/dev/null
@@ -111,5 +124,6 @@ else
     fi
 fi
 
-# Fire up the service!
+echo "launching services"
+ssh_helper "docker-compose down" >/dev/null ||:
 ssh_helper "docker-compose up -d"

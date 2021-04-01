@@ -3,3 +3,6 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Used for figuring out what's deployed locally
+hash.txt

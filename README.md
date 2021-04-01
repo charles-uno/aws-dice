@@ -1,13 +1,39 @@
-# AWS Practice
+# MTG Flashcards
 
-Deploying some code to AWS!
+The MTG deck [Amulet Titan][amulet_mtggoldfish] is known for its complex play
+patterns in the first few turns of the game. This app presents users with
+sample opening hands, then solves for the ideal sequence of plays to cast the
+titular titan as quickly as possible. Users can run the same opening hand back
+multiple times to get a sense for how things tend to play out.
 
-For this to work, you have to be logged into docker. The login username also must match the username provided in `build.sh`.
-```
-docker login
-```
+[amulet_mtggoldfish]: https://www.mtggoldfish.com/archetype/amulet-titan
 
-## AWS Lightsail
+For more information about the underlying model, see my write-up from
+[a while back][amulet_article].
+
+## Implementation
+
+This app uses a React frontend and a Go backend behind an nginx proxy. Each element is packaged into a Docker container and deployed to AWS LightSail via Docker Compose.
+
+The Go package used by the backend is published [here][mtgserver]. It's a stripped-down version of the model I wrote up [a while back][amulet_article].
+
+[mtgserver_readme]: https://github.com/charles-uno/mtgserver/blob/main/README.md
+[amulet_article]: https://charles.uno/amulet-simulation/
+
+## Usage
+
+To run this code yourself, follow the steps below:
+
+1. Get yourself a server to run on. I use [AWS Lightsail][aws_lightsail]. Also get a private key set up for passwordless access to that server.
+
+
+
+
+
+
+
+[aws_lightsail]: https://lightsail.aws.amazon.com/
+
 
 Lightsail seems to be the best (read: cheapest) way to fire up something little. Just a bare bones Linux instance.
 
