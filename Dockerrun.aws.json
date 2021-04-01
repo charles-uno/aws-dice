@@ -3,8 +3,8 @@
   "volumes": [],
   "containerDefinitions": [
     {
-      "name": "eb-nginx",
-      "image": "charlociraptor/eb-nginx",
+      "name": "nginx",
+      "image": "charlociraptor/flashcards-nginx",
       "environment": [],
       "portMappings": [
         {
@@ -16,13 +16,13 @@
       "memory": 128,
       "mountPoints": [],
       "links": [
-        "eb-back",
-        "eb-front"
+        "backend",
+        "frontend"
       ]
     },
     {
-      "name": "eb-front",
-      "image": "charlociraptor/eb-front",
+      "name": "frontend",
+      "image": "charlociraptor/flashcards-front",
       "environment": [],
       "portMappings": [
         {
@@ -34,12 +34,12 @@
       "memory": 128,
       "mountPoints": [],
       "links": [
-        "eb-back"
+        "backend"
       ]
     },
     {
-      "name": "eb-back",
-      "image": "charlociraptor/eb-back",
+      "name": "backend",
+      "image": "charlociraptor/flashcards-back",
       "environment": [],
       "portMappings": [
         {

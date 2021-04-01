@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nginx:
+    build: ./nginx
+    ports:
+    - "80:80"
+  frontend:
+    build: ./front
+    ports:
+    - "5000:5000"
+  backend:
+    build: ./back
+    ports:
+    - "5001:5001"

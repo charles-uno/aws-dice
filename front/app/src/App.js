@@ -236,7 +236,7 @@ class Flashcards extends React.Component {
             error: {location: null, text: null}
         });
         try {
-            const response = await axios.get(`http://localhost:5001/api/hand`);
+            const response = await axios.get(`/api/hand`);
             this.setState({opener: response.data});
         } catch (err) {
             console.log(err);
@@ -255,7 +255,7 @@ class Flashcards extends React.Component {
         });
         try {
             let payload = this.state.opener;
-            const response = await axios.post(`http://localhost:5001/api/play`, payload);
+            const response = await axios.post(`/api/play`, payload);
             this.setState({gameplay: response.data});
         } catch (err) {
             console.log(err);
