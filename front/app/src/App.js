@@ -19,29 +19,34 @@ class Flashcards extends React.Component {
     render() {
         return [
             this.renderAutocard(),
-            this.renderMain()
+            this.renderMain(),
+            this.renderFoot()
         ];
     }
 
+    renderAutocard() {
+        let uri = this.cardUri(this.state.autocard.name);
+        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
+        var wrapStyle = {display: "none"};
+        if (this.state.autocard.name != null) {
+            wrapStyle = {display: "block"};
+        }
+        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)} key="autocard">
+            {autocard}
+        </div>
+    }
     renderMain() {
-        return <div className="main" key="0">
-            <div className="article">
-                {this.renderHand()}
-                {this.renderPlay()}
-                <div className="foot-push"></div>
-            </div>
-            {this.renderFoot()}
+        return <div className="main" key="main">
+            {this.renderHand()}
+            {this.renderPlay()}
         </div>
     }
 
     renderFoot() {
-        return <div className="foot">
+        return <div className="foot" key="foot">
             &copy; Charles Fyfe 2021 under <a href="https://creativecommons.org/licenses/by/3.0/us/">CC-BY</a>
         </div>
-
-
     }
-
 
     renderHand() {
         return <div className="hand-wrap">
@@ -184,18 +189,6 @@ class Flashcards extends React.Component {
             text = "done on turn " + this.state.gameplay.turn.toString();
         }
         return <div className="play-outcome">{text}</div>
-    }
-
-    renderAutocard() {
-        let uri = this.cardUri(this.state.autocard.name);
-        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
-        var wrapStyle = {display: "none"};
-        if (this.state.autocard.name != null) {
-            wrapStyle = {display: "block"};
-        }
-        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)} key="1">
-            {autocard}
-        </div>
     }
 
     showAutocard(cardName) {
