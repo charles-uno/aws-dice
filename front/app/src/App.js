@@ -35,6 +35,7 @@ class Flashcards extends React.Component {
             {autocard}
         </div>
     }
+
     renderMain() {
         return <div className="main" key="main">
             {this.renderHand()}
@@ -95,9 +96,9 @@ class Flashcards extends React.Component {
         if (this.state.opener === null) {
             text = "";
         } else if (this.state.opener.onThePlay === true) {
-            text = "on the play";
+            text = "you are on the play";
         } else if (this.state.opener.onThePlay === false) {
-            text = "on the draw";
+            text = "you are on the draw";
         }
         return <div className="turn-order">{text}</div>
     }
@@ -106,7 +107,19 @@ class Flashcards extends React.Component {
         if (this.state.opener === null) {
             return "";
         }
-        return <div className="play-wrap">
+        // Color the background based on the outcome
+        var className = "play-wrap ";
+        if (this.state.gameplay === null) {
+        } else if (this.state.gameplay.turn === 2) {
+            className += "play-blue";
+        } else if (this.state.gameplay.turn === 3) {
+            className += "play-green";
+        } else if (this.state.gameplay.turn === 4) {
+            className += "play-yellow";
+        } else {
+            className += "play-red";
+        }
+        return <div className={className}>
             {this.renderPlayButton()}
             {this.renderPlayLines()}
             {this.renderPlayOutcome()}
@@ -261,7 +274,7 @@ class Flashcards extends React.Component {
     }
 
     manaUri(m) {
-        return "https://gatherer.wizards.com/Handlers/Image.ashx?size=small&type=symbol&name=" + m;
+        return "https://gatherer.wizards.com/Handlers/Image.ashx?size=medium&type=symbol&name=" + m;
     }
 
 }

@@ -10,8 +10,8 @@ $accent-color: #069;
 
 $fs-logo: 35px;
 $fs-button: 24px;
-$fs-body: 46px;
-$fs-tldr: 26px;
+$fs-body: 26px;
+$fs-tldr: 30px;
 $fs-caption: 12px;
 
 $head-tag-pad: 10px;
@@ -137,10 +137,9 @@ body {
     a { color: $accent-color; &:hover { color: $text-color; } }
 }
 
-
-
-
-
+.mana-symbol {
+    height: $fs-body;
+}
 
 /* App elements ------------------------------------------------------------ */
 
@@ -183,7 +182,7 @@ body {
     border: 1px solid magenta;
     font-size: $fs-tldr;
     width: 100%;
-    height: $fs-tldr + $margin-inner;
+    height: $fs-tldr;
     vertical-align: middle;
 }
 
@@ -212,15 +211,31 @@ body {
 
 .play-lines {
     margin: $margin-inner 0;
+    padding: 0;
     border: 1px solid red;
     font-size: $fs-body;
 }
 
+.play-red {background-color: #fdd;}
+
+.play-yellow {background-color: #ffd;}
+
+.play-green {background-color: #dfd;}
+
+.play-blue {background-color: #dff;}
+
 .play-line {
+    margin: 0.3*$margin-inner 0;
     text-align: left;
     border: 1px solid green;
     font-size: $fs-body;
 }
+
+.turn-start {
+    margin-top: $margin-inner;
+}
+
+
 
 .card {
     border-radius: 3px;
