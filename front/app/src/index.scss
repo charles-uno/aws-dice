@@ -1,18 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
 $head-font: 'Fredoka One', cursive;
@@ -25,13 +10,13 @@ $accent-color: #069;
 
 $fs-logo: 35px;
 $fs-button: 24px;
-$fs-body: 16px;
+$fs-body: 46px;
 $fs-tldr: 26px;
 $fs-caption: 12px;
 
 $head-tag-pad: 10px;
 $head-pad: 10px;
-$copy-height: 74px;
+$foot-height: 74px;
 $head-height: $fs-logo + 2*$head-pad;
 
 $paper-width: 1200px;
@@ -45,21 +30,10 @@ $mono-font: 'Cutive Mono', monospace;
 $head-font: 'Fredoka One', cursive;
 $logo-font: $head-font;
 
+/* Normalizing ------------------------------------------------------------- */
 
 a {
     text-decoration: none;
-}
-
-
-html, body, #root {
-    width: 100%;
-    height: 100%;
-    background-color: blue;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background-color: $shadow-color;
-    font-family: $sans-font;
 }
 
 a, a:focus, a:visited, a:hover {
@@ -68,6 +42,59 @@ a, a:focus, a:visited, a:hover {
 
 *, *:before, *:after {
     box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Overall layout, header, footer ------------------------------------------ */
+
+html {
+    height: 100%;
+    display: flex;
+}
+
+body {
+    flex: 1;
+    background-color: $shadow-color;
+    font-family: $sans-font;
+}
+
+#root {
+    min-height: 100%;
+    max-width: $paper-width;
+    margin: 0 auto;
+    background-color: $paper-color;
+}
+
+.main {
+    width: 100%;
+    position: relative;
+    top: 0px;
+    min-height:100%;
+    height:auto !important;
+    height:100%;
+}
+
+.article {
+    padding: ($head-height+$side-pad) $side-pad;
+    border: 2px solid green;
+}
+
+.foot {
+    width: $paper-width;
+    text-align: center;
+    font-size: $fs-caption;
+    padding: ($foot-height - $fs-caption)/2;
+    line-height: 1;
+    height: $foot-height;
+    vertical-align: middle;
+    color: $text-color;
+    a { color: $accent-color; &:hover { color: $text-color; } }
+    border: 1px solid red;
 }
 
 .head {
@@ -93,38 +120,15 @@ a, a:focus, a:visited, a:hover {
     }
 }
 
-.main-wrap {
-    width: 100%;
-    height: 100%;
-}
+/* Fonts and colors -------------------------------------------------------- */
 
-.main {
-    width: 100%;
-    height: 100%;
-    max-width: $paper-width;
-    padding: ($head-height+$side-pad) $side-pad;
-    margin: 0 auto;
-    background-color: $paper-color;
-    position: relative;
-    top: 0px;
-}
 
-.foot {
-    display: block;
-    text-align: center;
-    font-size: $fs-caption;
-    padding: ($copy-height - $fs-caption)/2;
-    line-height: 1;
-    height: $copy-height;
-    vertical-align: middle;
-    position: absolute;
-    width: 100%;
-    bottom: 0px;
-    right: 0px;
-    color: $text-color;
-    a { color: $accent-color; &:hover { color: $text-color; } }
-    border: 1px solid red;
-}
+
+
+
+
+
+/* App elements ------------------------------------------------------------ */
 
 .button-wrap {
     margin: $margin-inner 0;
@@ -166,6 +170,7 @@ a, a:focus, a:visited, a:hover {
     font-size: $fs-tldr;
     width: 100%;
     height: $fs-tldr + $margin-inner;
+    vertical-align: middle;
 }
 
 .hand-cards-wrap {
@@ -200,6 +205,7 @@ a, a:focus, a:visited, a:hover {
 .play-line {
     text-align: left;
     border: 1px solid green;
+    font-size: $fs-body;
 }
 
 .card {
@@ -226,7 +232,7 @@ a, a:focus, a:visited, a:hover {
     overflow: hidden;
 }
 
-.center-outer {
+.autocard-wrap {
     position: absolute;
     border: 0;
     padding: 0;
@@ -234,7 +240,7 @@ a, a:focus, a:visited, a:hover {
     height: 100%;
 }
 
-.center-inner {
+.autocard {
     position: relative;
     top: 50%;
     -ms-transform: translateY(-50%);

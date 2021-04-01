@@ -17,26 +17,30 @@ class Flashcards extends React.Component {
     }
 
     render() {
-        return <div className="main-wrap">
-            {this.renderAutocard()}
-            <div className="main">
+        return [
+            this.renderMain(),
+            this.renderAutocard()
+        ];
+    }
+
+    renderMain() {
+        return <div className="main" key="0">
+            <div className="article">
                 {this.renderHand()}
                 {this.renderPlay()}
             </div>
+            {this.renderFoot()}
         </div>
     }
 
-    renderAutocard() {
-        let uri = this.cardUri(this.state.autocard.name);
-        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
-        var wrapStyle = {display: "none"};
-        if (this.state.autocard.name != null) {
-            wrapStyle = {display: "block"};
-        }
-        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)}>
-            {autocard}
+    renderFoot() {
+        return <div className="foot">
+            &copy; Charles Fyfe 2021 under <a href="https://creativecommons.org/licenses/by/3.0/us/">CC-BY</a>
         </div>
+
+
     }
+
 
     renderHand() {
         return <div className="hand-wrap">
@@ -130,6 +134,8 @@ class Flashcards extends React.Component {
                 linesRaw[linesRaw.length-1].push(tag);
             }
         }
+        // Drop the first line. We already know about the opening hand.
+        linesRaw.shift();
         let lines = [];
         for (let i in linesRaw) {
             if (linesRaw[i].length > 0) {
@@ -141,6 +147,7 @@ class Flashcards extends React.Component {
 
     renderPlayLine(lineRaw, lineNumber) {
         let words = [];
+        let classNames = "play-line";
         for (let i in lineRaw) {
             let key = "line-" + lineNumber.toString() + "-word-" + i.toString();
             let wordRaw = lineRaw[i];
@@ -155,6 +162,9 @@ class Flashcards extends React.Component {
                     </span>
                 );
             } else {
+                if (wordRaw.text.toLowerCase().startsWith("turn")) {
+                    classNames += " turn-start";
+                }
                 words.push(
                     <span className="text" key={key}>{wordRaw.text}</span>
                 );
@@ -162,7 +172,7 @@ class Flashcards extends React.Component {
             key += 1;
         }
         let key = "line-" + lineNumber.toString();
-        return <p className="play-line" key={key}>{words}</p>
+        return <p className={classNames} key={key}>{words}</p>
     }
 
     renderPlayOutcome() {
@@ -173,6 +183,18 @@ class Flashcards extends React.Component {
             text = "done on turn " + this.state.gameplay.turn.toString();
         }
         return <div className="play-outcome">{text}</div>
+    }
+
+    renderAutocard() {
+        let uri = this.cardUri(this.state.autocard.name);
+        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
+        var wrapStyle = {display: "none"};
+        if (this.state.autocard.name != null) {
+            wrapStyle = {display: "block"};
+        }
+        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)} key="1">
+            {autocard}
+        </div>
     }
 
     showAutocard(cardName) {
