@@ -3,7 +3,7 @@
 nginx
 
 # AWS blocks port 443 so SSL via Certbot won't work. Loop here forever
-while :; do sleep 120; done
+# while :; do sleep 120; done
 
 certbot \
     --non-interactive \

@@ -48,4 +48,5 @@ internally -- the server can talk to itself on port 443 via HTTPS. But ingress
 is blocked. Looks like AWS prefers to have a load balancer set up in the GUI
 (yuck). More information:
 
-- https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https
+- [SSL/TLS certificates in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https)
+- [Instance firewalls in Amazon Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-firewall-and-port-mappings-in-amazon-lightsail#specifying-ports)

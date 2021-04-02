@@ -8,16 +8,15 @@ $paper-color: #ddd;
 $shadow-color: #fff;
 $accent-color: #069;
 
-$fs-logo: 35px;
-$fs-button: 24px;
+$fs-title: 35px;
+$fs-header: 24px;
 $fs-body: 26px;
-$fs-tldr: 30px;
 $fs-caption: 12px;
 
 $head-tag-pad: 10px;
 $head-pad: 5px;
 $foot-height: 74px;
-$head-height: $fs-logo + 2*$head-pad;
+$head-height: $fs-title + 2*$head-pad;
 
 $paper-width: 1200px;
 $side-pad: 12px;
@@ -133,7 +132,7 @@ body {
 .head {
     background-color: $accent-color;
     font-family: $logo-font;
-    font-size: $fs-logo;
+    font-size: $fs-title;
     color: $shadow-color;
     -webkit-box-shadow: rgba(0,0,0,0.8) 0px 0 $shadow-size;
     -moz-box-shadow: rgba(0,0,0,0.8) 0 0 $shadow-size;
@@ -182,10 +181,10 @@ body {
     margin: 0;
     padding: 0px;
     border: 2px solid $accent-color;
-    height: 50px;
+    height: $fs-header + $margin-inner;
     width: 100%;
     border-radius: 5px;
-    font-size: $fs-button;
+    font-size: $fs-header;
     color: $accent-color;
 }
 
@@ -207,9 +206,9 @@ body {
     margin-top: $margin-inner;
     border: 1px solid magenta;
     width: 100%;
-    font-size: $fs-tldr;
-    height: $fs-tldr;
-    vertical-align: middle;
+    font-size: $fs-header;
+    height: $fs-header + $margin-inner;
+    vertical-align: center;
 }
 
 .hand-cards-wrap {
