@@ -2,9 +2,8 @@
 
 nginx
 
-certbot --help all
-
-while :; do sleep 120; done
+#certbot --help all
+# while :; do sleep 120; done
 
 certbot \
     --non-interactive \
