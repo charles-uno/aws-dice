@@ -88,8 +88,10 @@ body {
 
 .main {
     grid-area: main;
-    padding-top: $head-height;
+    padding: $margin-around;
+    padding-top: $head-height + $margin-around;
     max-width: $paper-width;
+    text-align: center;
     width: 100%;
     margin: 0 auto;
     border: 2px solid green;
@@ -195,16 +197,14 @@ body {
 }
 
 .hand-wrap, .play-wrap {
-    margin: $margin-around;
-    padding: $margin-inner;
-    border-radius: 20px;
-    background-color: $shadow-color;
-    text-align: center;
+    margin: 0;
+    padding: 0;
     border: 1px solid green;
 }
 
 .error-message, .play-outcome, .turn-order {
-    margin: $margin-inner 0;
+    margin: 0;
+    margin-top: $margin-inner;
     border: 1px solid magenta;
     width: 100%;
     font-size: $fs-tldr;

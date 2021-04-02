@@ -41,12 +41,12 @@ class Flashcards extends React.Component {
 
     renderAutocard() {
         let uri = this.cardUri(this.state.autocard.name);
-        let autocard = <img className="autocard center-inner" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
+        let autocard = <img className="autocard" id="autocard" src={uri} alt={this.state.autocard.name} style={this.state.autocard.style} />
         var wrapStyle = {display: "none"};
         if (this.state.autocard.name != null) {
             wrapStyle = {display: "block"};
         }
-        return <div className="autocard-wrap center-outer" style={wrapStyle} onClick={this.hideAutocard.bind(this)} key="autocard">
+        return <div className="autocard-wrap" style={wrapStyle} onClick={this.hideAutocard.bind(this)} key="autocard">
             {autocard}
         </div>
     }
@@ -130,19 +130,7 @@ class Flashcards extends React.Component {
         if (this.state.opener === null) {
             return "";
         }
-        // Color the background based on the outcome
-        var className = "play-wrap ";
-        if (this.state.gameplay === null) {
-        } else if (this.state.gameplay.turn === 2) {
-            className += "play-blue";
-        } else if (this.state.gameplay.turn === 3) {
-            className += "play-green";
-        } else if (this.state.gameplay.turn === 4) {
-            className += "play-yellow";
-        } else {
-            className += "play-red";
-        }
-        return <div className={className}>
+        return <div className="play-wrap">
             {this.renderPlayButton()}
             {this.renderPlayLines()}
             {this.renderPlayOutcome()}
@@ -218,13 +206,25 @@ class Flashcards extends React.Component {
     }
 
     renderPlayOutcome() {
+        let className = "play-outcome ";
+        if (this.state.gameplay === null) {
+            ;
+        } else if (this.state.gameplay.turn === 2) {
+            className += "play-blue";
+        } else if (this.state.gameplay.turn === 3) {
+            className += "play-green";
+        } else if (this.state.gameplay.turn === 4) {
+            className += "play-yellow";
+        } else {
+            className += "play-red";
+        }
         let text = "no solution before turn 5";
         if (this.state.gameplay === null) {
             text = "";
         } else if (this.state.gameplay.turn > 0) {
             text = "done on turn " + this.state.gameplay.turn.toString();
         }
-        return <div className="play-outcome">{text}</div>
+        return <div className={className}>{text}</div>
     }
 
     showAutocard(cardName) {
