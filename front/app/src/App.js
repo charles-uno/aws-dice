@@ -97,7 +97,7 @@ class Flashcards extends React.Component {
         for (let i=0; i<7; i++) {
             if (this.state.opener === null) {
                 imgs.push(
-                    <img className="hand-card" src={this.cardUri("back")} alt="card back" key={i} onClick={this.showAutocard.bind(this, "back")} />
+                    <img className="hand-card" src={this.cardUri("back")} alt="card back" key={i} />
                 );
             } else {
                 let c = this.state.opener.hand[i];

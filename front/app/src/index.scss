@@ -24,13 +24,11 @@ $button-height: $fs-large + 2*$button-pad;
 $button-radius: 5px;
 
 $paper-width: 1200px;
-$paper-side-pad: 12px;
-$margin-inner: 20px;
-$margin-around: 25px;
+$paper-side-pad: 15px;
 
-
-
-
+$margin-between-lines: 6px;
+$margin-below-button: 15px;
+$margin-above-button: 25px;
 
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
@@ -165,7 +163,7 @@ body {
 }
 
 .foot-elt {
-    padding: 0 $margin-inner;
+    padding: 0 $margin-between-lines;
     border: 1px solid brown;
 }
 
@@ -176,7 +174,8 @@ body {
 /* App elements ------------------------------------------------------------ */
 
 .button-wrap {
-    margin: $margin-inner 0;
+    margin-top: $margin-above-button;
+    margin-bottom: $margin-below-button;
     padding: 0;
     border: 0;
     width: 100%;
@@ -201,14 +200,15 @@ body {
 }
 
 .hand-wrap, .play-wrap {
-    margin: $margin-around 0;
+    margin-top: $margin-above-button;
+    margin-bottom: $margin-below-button;
     padding: 0;
     border: 1px solid green;
 }
 
 .error-message, .play-outcome, .turn-order {
     margin: 0;
-    margin-top: $margin-inner;
+    margin-top: $margin-between-lines;
     padding: $button-pad 0;
     border: 1px solid magenta;
     width: 100%;
@@ -220,7 +220,8 @@ body {
 }
 
 .hand-cards-wrap {
-    margin: $margin-inner 0;
+    margin-top: $margin-below-button;
+    margin-bottom: $margin-between-lines;
     padding: 0;
     border: 0;
     width: 100%;
@@ -249,7 +250,7 @@ body {
 }
 
 .play-lines {
-    margin: $margin-inner 0;
+    margin: $margin-between-lines 0;
     padding: 0;
     border: 1px solid red;
     font-size: $fs-body;
@@ -264,21 +265,29 @@ body {
 .play-blue {background-color: #dff;}
 
 .play-line {
-    margin: 0.3*$margin-inner 0;
+    margin: $margin-between-lines 0;
     text-align: left;
     border: 1px solid green;
     font-size: $fs-body;
 }
 
+.play-line:first-child {
+    margin-top: 0;
+}
+
+.play-line:last-child {
+    margin-bottom: 0;
+}
+
 .turn-start {
-    margin-top: $margin-inner;
+    margin-top: $margin-between-lines;
 }
 
 .card {
     color: $accent-color;
-    border-radius: 3px;
-    border: 1px solid $accent-color;
-    background: #ddd;
+    &:hover {
+        color: $text-color;
+    }
 }
 
 .autocard-wrap {
