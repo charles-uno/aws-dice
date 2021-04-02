@@ -4,9 +4,14 @@ services:
     image: charlociraptor/flashcards-nginx
     ports:
     - "80:80"
+    - "443:443"
     depends_on:
     - frontend
     - backend
+    - certbot
+    volumes:
+    - "./data/certbot/conf:/etc/letsencrypt"
+    - "./data/certbot/www:/var/www/certbot"
   frontend:
     image: charlociraptor/flashcards-front
     ports:
@@ -17,3 +22,8 @@ services:
     image: charlociraptor/flashcards-back
     ports:
     - "5001:5001"
+  certbot:
+    image: certbot/certbot
+    volumes:
+    - "./data/certbot/conf:/etc/letsencrypt"
+    - "./data/certbot/www:/var/www/certbot"
