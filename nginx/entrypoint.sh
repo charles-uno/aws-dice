@@ -2,6 +2,9 @@
 
 nginx
 
+echo "default.conf"
+cat /etc/nginx/conf.d/default.conf
+
 #certbot --help all
 # while :; do sleep 120; done
 
@@ -13,3 +16,6 @@ certbot \
     -d flashcards.charles.uno \
     -d www.flashcards.charles.uno \
     --redirect
+
+echo "default.conf"
+cat /etc/nginx/conf.d/default.conf
