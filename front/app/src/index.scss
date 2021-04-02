@@ -67,7 +67,6 @@ body {
 }
 
 #root {
-    background-color: cyan;
     height: 100%;
     width: 100%;
     display: grid;
@@ -155,6 +154,13 @@ body {
     vertical-align: middle;
     color: $text-color;
     a { color: $accent-color; &:hover { color: $text-color; } }
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.foot-elt {
+    padding: 0 $margin-inner;
+    border: 1px solid brown;
 }
 
 .mana-symbol {
@@ -212,7 +218,7 @@ body {
     border: 0;
     width: 100%;
     /* Percentage is relative to the width. Enforces aspect ratio. */
-    padding-top: 19.5%;
+    padding-top: 26.4%;
     position: relative;
     border: 1px solid blue;
 }
@@ -226,8 +232,15 @@ body {
 }
 
 .hand-card {
-    width: 14%;
+    border-radius: 5%;
+    overflow: hidden;
+    width: 19%;
 }
+
+.hand-card:not(:first-child) {
+    margin-left:-5.5%;
+}
+
 
 .play-lines {
     margin: $margin-inner 0;

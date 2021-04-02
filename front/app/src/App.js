@@ -16,6 +16,21 @@ class Flashcards extends React.Component {
         };
     }
 
+    componentDidMount(){
+        document.addEventListener("keydown", this.onKeyPress.bind(this), false);
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener("keydown", this.onKeyPress.bind(this), false);
+    }
+
+    onKeyPress(event){
+        // Esc
+        if(event.keyCode === 27) {
+            this.hideAutocard(event)
+        }
+    }
+
     render() {
         return [
             this.renderAutocard(),
@@ -45,7 +60,15 @@ class Flashcards extends React.Component {
 
     renderFoot() {
         return <div className="foot" key="foot">
-            &copy; Charles Fyfe 2021 under <a href="https://creativecommons.org/licenses/by/3.0/us/">CC-BY</a>
+            <span className="foot-elt">
+                &copy; Charles Fyfe 2021
+            </span>
+            <span className="foot-elt">
+                <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md">Source code on GitHub</a>
+            </span>
+            <span className="foot-elt">
+                 <a href="https://charles.uno/amulet-simulation">About the model</a>
+            </span>
         </div>
     }
 

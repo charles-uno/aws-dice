@@ -70,9 +70,6 @@ for DIR in $COMMIT_DIRS; do
         continue
     fi
     echo "$DIR : building..."
-
-    continue
-
     SERVICE_NAME="$DIR"
     IMAGE_NAME="$DOCKER_USERNAME/flashcards-$SERVICE_NAME"
     if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP" >/dev/null 2>&1; then
@@ -125,5 +122,6 @@ else
 fi
 
 echo "launching services"
-ssh_helper "docker-compose down" >/dev/null ||:
+ssh_helper "docker-compose down"
+ssh_helper "docker-compose pull"
 ssh_helper "docker-compose up -d"
