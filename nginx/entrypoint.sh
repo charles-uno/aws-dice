@@ -12,5 +12,4 @@ certbot \
     --nginx \
     -d flashcards.charles.uno \
     -d www.flashcards.charles.uno \
-    --redirect \
-    --dry-run
+    --redirect

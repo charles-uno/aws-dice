@@ -47,7 +47,7 @@ function scp_helper {
     fi
 }
 
-if ssh_ping; then
+if [[ "$ADDRESS" == "localhost" ]] || ssh_ping; then
     echo "verified connection"
 else
     echo "can't connect!"
