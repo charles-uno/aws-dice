@@ -2,9 +2,9 @@
 
 nginx
 
-# AWS blocks port 443 so SSL via Certbot won't work. Loop here forever
-# while :; do sleep 120; done
+while :; do sleep 120; done
 
+# Note: use --dry-run to avoid hitting request limits
 certbot \
     --non-interactive \
     --agree-tos \
@@ -12,4 +12,5 @@ certbot \
     --nginx \
     -d flashcards.charles.uno \
     -d www.flashcards.charles.uno \
-    --redirect
+    --redirect \
+    --dry-run
