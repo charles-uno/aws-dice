@@ -44,7 +44,7 @@ a, a:focus, a:visited, a:hover {
     box-sizing: border-box;
 }
 
-html, body {
+html, body, div {
     margin: 0;
     padding: 0;
     border: 0;
@@ -55,17 +55,20 @@ html, body {
 html {
     height: 100%;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: "body";
+
 }
 
 body {
-    flex: 1;
-    width: 100%;
+    grid-area: body;
 }
 
 #root {
     background-color: cyan;
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     display: grid;
     grid-template-columns: auto minmax(100%, $paper-width) auto;
@@ -75,11 +78,22 @@ body {
         ". foot .";
 }
 
+
+.autocard-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
 .main {
     grid-area: main;
     padding-top: $head-height;
-    width: 100%;
     max-width: $paper-width;
+    width: 100%;
+    margin: 0 auto;
     border: 2px solid green;
 }
 
@@ -88,6 +102,9 @@ body {
     padding: ($foot-height - $fs-caption)/2;
     height: $foot-height;
     vertical-align: middle;
+    max-width: $paper-width;
+    width: 100%;
+    margin: 0 auto;
     border: 1px solid red;
 }
 
@@ -184,9 +201,9 @@ body {
 .error-message, .play-outcome, .turn-order {
     margin: $margin-inner 0;
     border: 1px solid magenta;
-    font-size: $fs-tldr;
     width: 100%;
-    height: $fs-tldr;
+    font-size: 500px;
+//    height: $fs-tldr;
     vertical-align: middle;
 }
 
@@ -248,10 +265,7 @@ body {
 }
 
 .autocard-wrap {
-    position: absolute;
     z-index: 998;
-    width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: none;
     text-align: center;
@@ -263,14 +277,6 @@ body {
     max-width: 50%;
     border-radius: 5%;
     overflow: hidden;
-}
-
-.autocard-wrap {
-    position: absolute;
-    border: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
 }
 
 .autocard {
