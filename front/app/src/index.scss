@@ -201,8 +201,8 @@ body {
     margin: $margin-inner 0;
     border: 1px solid magenta;
     width: 100%;
-    font-size: 500px;
-//    height: $fs-tldr;
+    font-size: $fs-tldr;
+    height: $fs-tldr;
     vertical-align: middle;
 }
 
