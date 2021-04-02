@@ -60,7 +60,7 @@ class Flashcards extends React.Component {
 
     renderFoot() {
         return <div className="foot" key="foot">
-            <span className="foot-elt">
+            <span className="foot-elt center">
                 &copy; Charles Fyfe 2021
             </span>
             <span className="foot-elt">
