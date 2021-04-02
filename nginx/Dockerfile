@@ -7,4 +7,4 @@ RUN rm -f /etc/nginx/conf.d/*
 EXPOSE 80
 EXPOSE 443
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-ENTRYPOINT ["certbot", "--nginx"]
+ENTRYPOINT ["certbot", "--nginx", "--batch"]
