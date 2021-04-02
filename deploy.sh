@@ -32,14 +32,14 @@ function ssh_helper {
     if [[ "$ADDRESS" == "localhost" ]]; then
         $@
     else
-        timeout 10 ssh -i "$KEYFILE" ec2-user@"$ADDRESS" "$@"
+        timeout 300 ssh -i "$KEYFILE" ec2-user@"$ADDRESS" "$@"
     fi
 }
 
 function scp_helper {
     if [[ "$ADDRESS" != "localhost" ]]; then
         # Just copy everything into the home directory
-        timeout 10 scp -i "$KEYFILE" "$@" ec2-user@"$ADDRESS":"~"
+        timeout 300 scp -i "$KEYFILE" "$@" ec2-user@"$ADDRESS":"~"
     fi
 }
 
@@ -122,6 +122,6 @@ else
 fi
 
 echo "launching services"
-ssh_helper "docker-compose down"
-ssh_helper "docker-compose pull"
+ssh_helper "docker-compose down" >/dev/null 2>&1 ||:
+ssh_helper "docker-compose pull" >/dev/null 2>&1 ||:
 ssh_helper "docker-compose up -d"
