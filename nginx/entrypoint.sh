@@ -2,9 +2,6 @@
 
 nginx
 
-echo "default.conf"
-cat /etc/nginx/conf.d/default.conf
-
 #certbot --help all
 # while :; do sleep 120; done
 
