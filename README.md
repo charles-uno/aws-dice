@@ -26,27 +26,34 @@ stripped-down version of the model I wrote up [a while back][amulet_article].
 
 ## Usage
 
-To run this code locally, use:
-```
-./deploy.sh localhost
-```
-Note that you must be logged in to Docker for this to work, and your Docker
-username must match what's listed in `deploy.sh`.
-
-To deploy to AWS, instead use:
+To deploy to AWS, use:
 ```
 ./deploy.sh $ADDRESS $KEYFILE
 ```
 Where `$ADDRESS` is the address of the instance you want to deploy to, and
-`$KEYFILE` is a private key that grants passwordless access to that address.
-(Note: AWS does this automatically.)
+`$KEYFILE` is a private key that grants passwordless access to that address,
+which AWS provides under the [Account page][aws_account]. To use HTTPS, you'll
+also need to [add a firewall rule][aws_firewall] to expose port 443.
+
+Note: in order to push the Docker images, you'll need to be logged into Docker
+(`docker login`) and your Docker username must match what's listed in
+`deploy.sh`.
+
+[aws_account]: https://lightsail.aws.amazon.com/ls/webapp/account/keys
+[aws_firewall]: https://aws.amazon.com/blogs/compute/enhancing-site-security-with-new-lightsail-firewall-features/
+
+It's also possible to "deploy" locally, via:
+```
+./deploy.sh localhost
+```
+Local deployment does the same build (so you must still be logged in to Docker)
+but does not touch your deployed instance. It also runs Docker Compose
+interactively for verbose output.
 
 ## HTTPS and SSL
 
-We're set up to do HTTPS via Certbot in the nginx container. It seems to work
-internally -- the server can talk to itself on port 443 via HTTPS. But ingress
-is blocked. Looks like AWS prefers to have a load balancer set up in the GUI
-(yuck). More information:
+AWS suggests setting up a load balancer in the GUI to enable HTTPS. We're
+working on getting Certbot running alongside nginx instead. More information:
 
 - [SSL/TLS certificates in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https)
-- [Instance firewalls in Amazon Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-firewall-and-port-mappings-in-amazon-lightsail#specifying-ports)
+- [Certbot Rate Limits](https://letsencrypt.org/docs/rate-limits/)
