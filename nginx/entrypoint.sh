@@ -2,6 +2,10 @@
 
 nginx
 
+while :; do
+    sleep 120
+done
+
 certbot \
     --non-interactive \
     --agree-tos \
