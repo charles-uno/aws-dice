@@ -72,8 +72,9 @@ for DIR in $COMMIT_DIRS; do
     echo "$DIR : building..."
     SERVICE_NAME="$DIR"
     IMAGE_NAME="$DOCKER_USERNAME/flashcards-$SERVICE_NAME"
-    if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP" >/dev/null 2>&1; then
+    if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP"; then
         echo "$DIR : docker build failed"
+        exit 1
     fi
     echo "$DIR : pushing..."
     docker tag "$IMAGE_NAME:$STAMP" "$IMAGE_NAME:latest" >/dev/null
