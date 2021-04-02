@@ -36,12 +36,23 @@ function ssh_helper {
     fi
 }
 
+function ssh_ping {
+    timeout 3 ssh -i "$KEYFILE" ec2-user@"$ADDRESS" "echo HELLO" >/dev/null 2>&1
+}
+
 function scp_helper {
     if [[ "$ADDRESS" != "localhost" ]]; then
         # Just copy everything into the home directory
         timeout 300 scp -i "$KEYFILE" "$@" ec2-user@"$ADDRESS":"~"
     fi
 }
+
+if ssh_ping; then
+    echo "verified connection"
+else
+    echo "can't connect!"
+    exit 1
+fi
 
 # Easier to judge what's stale if we're up to date in Git
 echo "getting up to date with git"
@@ -80,6 +91,7 @@ for DIR in $COMMIT_DIRS; do
     docker tag "$IMAGE_NAME:$STAMP" "$IMAGE_NAME:latest" >/dev/null
     docker push "$IMAGE_NAME:$STAMP" >/dev/null
     docker push "$IMAGE_NAME:latest" >/dev/null
+
 done
 
 # Copy files over
@@ -108,7 +120,7 @@ else
     MAX_ATTEMPTS=10
     for ATTEMPT in $(seq 1 "$MAX_ATTEMPTS"); do
         echo "waiting for reboot $ATTEMPT/$MAX_ATTEMPTS"
-        if ssh_helper 'echo HELLO' >/dev/null 2>&1; then
+        if ssh_ping; then
             break
         fi
         sleep 20
@@ -122,7 +134,14 @@ else
     fi
 fi
 
-echo "launching services"
+echo "stopping existing services"
 ssh_helper "docker-compose down" >/dev/null 2>&1 ||:
+echo "pulling new containers"
 ssh_helper "docker-compose pull" >/dev/null 2>&1 ||:
-ssh_helper "docker-compose up -d"
+# For local work, run interactively for full output
+echo "launching new services"
+if [[ "$ADDRESS" == "localhost" ]]; then
+    docker-compose up
+else
+    ssh_helper "docker-compose up -d"
+fi

@@ -2,8 +2,8 @@
 
 nginx
 
-#certbot --help all
-# while :; do sleep 120; done
+# AWS blocks port 443 so SSL via Certbot won't work. Loop here forever
+while :; do sleep 120; done
 
 certbot \
     --non-interactive \
@@ -13,6 +13,3 @@ certbot \
     -d flashcards.charles.uno \
     -d www.flashcards.charles.uno \
     --redirect
-
-echo "default.conf"
-cat /etc/nginx/conf.d/default.conf

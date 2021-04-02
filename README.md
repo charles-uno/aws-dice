@@ -40,3 +40,12 @@ To deploy to AWS, instead use:
 Where `$ADDRESS` is the address of the instance you want to deploy to, and
 `$KEYFILE` is a private key that grants passwordless access to that address.
 (Note: AWS does this automatically.)
+
+## HTTPS and SSL
+
+We're set up to do HTTPS via Certbot in the nginx container. It seems to work
+internally -- the server can talk to itself on port 443 via HTTPS. But ingress
+is blocked. Looks like AWS prefers to have a load balancer set up in the GUI
+(yuck). More information:
+
+- https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https
