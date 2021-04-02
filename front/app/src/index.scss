@@ -80,12 +80,12 @@ body {
 
 .autocard-wrap {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    // Some wiggle room since things move when scrolling
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
 }
-
 
 .main {
     grid-area: main;
