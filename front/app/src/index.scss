@@ -269,8 +269,9 @@ body {
 }
 
 .card {
+    color: $accent-color;
     border-radius: 3px;
-    border: 1px solid #bbb;
+    border: 1px solid $accent-color;
     background: #ddd;
 }
 
