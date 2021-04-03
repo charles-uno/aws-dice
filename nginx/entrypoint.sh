@@ -2,6 +2,8 @@
 
 nginx -g 'daemon off;'
 
+exit 1
+
 # Note: use --dry-run to avoid hitting request limits
 certbot \
     --non-interactive \
