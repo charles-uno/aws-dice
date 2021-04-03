@@ -26,9 +26,9 @@ $button-radius: 5px;
 $paper-width: 1200px;
 $paper-side-pad: 15px;
 
-$margin-between-lines: 6px;
-$margin-below-button: 15px;
-$margin-above-button: 25px;
+$vspace-s: 10px;
+$vspace-m: 20px;
+$vspace-l: 30px;
 
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
@@ -159,11 +159,11 @@ body {
     color: $text-color;
     a { color: $accent-color; &:hover { color: $text-color; } }
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .foot-elt {
-    padding: 0 $margin-between-lines;
+    padding: 0 $paper-side-pad;
     border: 1px solid brown;
 }
 
@@ -174,8 +174,8 @@ body {
 /* App elements ------------------------------------------------------------ */
 
 .button-wrap {
-    margin-top: $margin-above-button;
-    margin-bottom: $margin-below-button;
+    margin-top: $vspace-l;
+    margin-bottom: $vspace-m;
     padding: 0;
     border: 0;
     width: 100%;
@@ -200,15 +200,15 @@ body {
 }
 
 .hand-wrap, .play-wrap {
-    margin-top: $margin-above-button;
-    margin-bottom: $margin-below-button;
+    margin-top: $vspace-l;
+    margin-bottom: $vspace-m;
     padding: 0;
     border: 1px solid green;
 }
 
 .error-message, .play-outcome, .turn-order {
     margin: 0;
-    margin-top: $margin-between-lines;
+    margin-top: $vspace-s;
     padding: $button-pad 0;
     border: 1px solid magenta;
     width: 100%;
@@ -220,8 +220,8 @@ body {
 }
 
 .hand-cards-wrap {
-    margin-top: $margin-below-button;
-    margin-bottom: $margin-between-lines;
+    margin-top: $vspace-m;
+    margin-bottom: $vspace-s;
     padding: 0;
     border: 0;
     width: 100%;
@@ -250,7 +250,7 @@ body {
 }
 
 .play-lines {
-    margin: $margin-between-lines 0;
+    margin: $vspace-m 0;
     padding: 0;
     border: 1px solid red;
     font-size: $fs-body;
@@ -265,7 +265,7 @@ body {
 .play-blue {background-color: #dff;}
 
 .play-line {
-    margin: $margin-between-lines 0;
+    margin: $vspace-s 0;
     text-align: left;
     border: 1px solid green;
     font-size: $fs-body;
@@ -280,7 +280,7 @@ body {
 }
 
 .turn-start {
-    margin-top: $margin-between-lines;
+    margin-top: $vspace-m;
 }
 
 .card {
