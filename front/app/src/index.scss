@@ -108,7 +108,7 @@ body {
     max-width: $paper-width;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid red;
+//    border: 1px solid red;
 }
 
 .head {
@@ -164,7 +164,7 @@ body {
 
 .foot-elt {
     padding: 0 $paper-side-pad;
-    border: 1px solid brown;
+//    border: 1px solid brown;
 }
 
 .mana-symbol {
@@ -186,6 +186,7 @@ body {
     padding: 0px;
     border: 2px solid $accent-color;
     height: $button-height;
+    background-color: $shadow-color;
     width: 100%;
     border-radius: 5px;
     font-size: $fs-large;
@@ -203,14 +204,14 @@ body {
     margin-top: $vspace-l;
     margin-bottom: $vspace-m;
     padding: 0;
-    border: 1px solid green;
+//    border: 1px solid green;
 }
 
 .error-message, .play-outcome, .turn-order {
     margin: 0;
     margin-top: $vspace-s;
     padding: $button-pad 0;
-    border: 1px solid magenta;
+//    border: 1px solid magenta;
     width: 100%;
     font-size: $fs-large;
     height: $button-height;
@@ -228,7 +229,7 @@ body {
     /* Percentage is relative to the width. Enforces aspect ratio. */
     padding-top: 26.4%;
     position: relative;
-    border: 1px solid blue;
+//    border: 1px solid blue;
 }
 
 .hand-cards {
@@ -252,7 +253,7 @@ body {
 .play-lines {
     margin: $vspace-m 0;
     padding: 0;
-    border: 1px solid red;
+//    border: 1px solid red;
     font-size: $fs-body;
 }
 
@@ -267,7 +268,7 @@ body {
 .play-line {
     margin: $vspace-s 0;
     text-align: left;
-    border: 1px solid green;
+//    border: 1px solid green;
     font-size: $fs-body;
 }
 
