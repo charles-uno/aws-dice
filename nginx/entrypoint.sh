@@ -1,8 +1,6 @@
 #!/bin/bash
 
-nginx
-
-while :; do sleep 120; done
+nginx -g 'daemon off;'
 
 # Note: use --dry-run to avoid hitting request limits
 certbot \
