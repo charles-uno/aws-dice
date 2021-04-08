@@ -1,5 +1,6 @@
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
+$head-font: 'Chango', cursive;
 $head-font: 'Fredoka One', cursive;
 $logo-font: $head-font;
 
@@ -13,7 +14,7 @@ $fs-large: 24px;
 $fs-body: 26px;
 $fs-small: 12px;
 
-$navbar-pad: 5px;
+$navbar-pad: 6px;
 $navbar-height: $fs-title + 2*$navbar-pad;
 $shadow-size: 10px;
 $foot-pad: 10px;
@@ -24,16 +25,11 @@ $button-height: $fs-large + 2*$button-pad;
 $button-radius: 5px;
 
 $paper-width: 1000px;
-$paper-side-pad: 15px;
+$paper-side-pad: 20px;
 
 $vspace-s: 5px;
 $vspace-m: 20px;
 $vspace-l: 40px;
-
-$sans-font: 'Roboto', sans-serif;
-$mono-font: 'Cutive Mono', monospace;
-$head-font: 'Fredoka One', cursive;
-$logo-font: $head-font;
 
 /* Normalizing ------------------------------------------------------------- */
 
@@ -98,7 +94,7 @@ body {
     text-align: center;
     width: 100%;
     margin: 0 auto;
-    border: 2px solid green;
+//    border: 2px solid green;
 }
 
 .foot {
@@ -114,6 +110,7 @@ body {
 .head {
     width: 100%;
     height: $navbar-height;
+    padding: $navbar-pad 0;
     z-index: 99;
     top: 0px;
     position: fixed;
@@ -123,6 +120,9 @@ body {
         max-width: $paper-width;
         margin: 0 auto;
         padding: 0 $paper-side-pad;
+        height: $fs-title;
+        overflow: visible;
+        text-align: bottom;
     }
 }
 
@@ -169,6 +169,10 @@ body {
 
 .mana-symbol {
     height: $fs-body;
+}
+
+.mana-expr {
+    white-space: nowrap;
 }
 
 /* App elements ------------------------------------------------------------ */

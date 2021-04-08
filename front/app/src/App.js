@@ -179,30 +179,34 @@ class Flashcards extends React.Component {
         let words = [];
         let classNames = "play-line";
         for (let i in lineRaw) {
-            let key = "line-" + lineNumber.toString() + "-word-" + i.toString();
             let wordRaw = lineRaw[i];
             if (wordRaw.type === "mana") {
-                for (let symbol of this.renderMana(wordRaw.text, key)) {
-                    words.push(symbol);
-                }
-            } else if (wordRaw.type === "land" || wordRaw.type === "spell") {
+                let imgs = this.renderMana(wordRaw.text);
                 words.push(
-                    <span className="card" key={key} onClick={this.showAutocard.bind(this, wordRaw.text)}>
-                        {wordRaw.text}
+                    <span className="mana-expr" key={i}>
+                        {imgs}
                     </span>
                 );
+            } else if (wordRaw.type === "land" || wordRaw.type === "spell") {
+                words.push(this.card(wordRaw.text, key=i));
             } else {
                 if (wordRaw.text.toLowerCase().startsWith("turn")) {
                     classNames += " turn-start";
                 }
                 words.push(
-                    <span className="text" key={key}>{wordRaw.text}</span>
+                    <span className="text" key={i}>{wordRaw.text}</span>
                 );
             }
             key += 1;
         }
         let key = "line-" + lineNumber.toString();
         return <p className={classNames} key={key}>{words}</p>
+    }
+
+    card(cardName, key=null) {
+        return <span className="card" key={key} onClick={this.showAutocard.bind(this, cardName)}>
+            {cardName}
+        </span>
     }
 
     renderPlayOutcome() {
@@ -239,13 +243,12 @@ class Flashcards extends React.Component {
         });
     }
 
-    renderMana(m, key) {
+    renderMana(m) {
         let imgs = [];
         for (let i=0; i<m.length; i++) {
             let alt = "{" + m[i] + "}";
-            let k = key.toString() + "-" + i.toString();
             imgs.push(
-                <img src={this.manaUri(m[i])} className="mana-symbol" alt={alt} key={k} />
+                <img src={this.manaUri(m[i])} className="mana-symbol" alt={alt} key={i} />
             );
         }
         return imgs;

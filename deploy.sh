@@ -61,13 +61,13 @@ git add docker-compose.yml $COMMIT_DIRS
 git commit -m "pre-deploy commit" >/dev/null ||:
 
 HASH_LOCAL=$(git rev-parse HEAD)
-HASH_REMOTE=$(ssh_helper 'cat hash.txt' 2>/dev/null ||:)
+HASH_BUILT=$(cat hash.txt 2>/dev/null ||:)
 # Only need to rebuild things that have changed since the last commit we
 # deployed. If there's no remote hash, rebuild everything
-if [[ "$HASH_REMOTE" == "" ]]; then
+if [[ "$HASH_BUILT" == "" ]]; then
     BUILD_DIRS="$COMMIT_DIRS"
 else
-    BUILD_DIRS=$(git diff "$HASH_REMOTE" --name-only | grep '/' | cut -d '/' -f 1 | sort | uniq 2>/dev/null)
+    BUILD_DIRS=$(git diff "$HASH_BUILT" --name-only | grep '/' | cut -d '/' -f 1 | sort | uniq 2>/dev/null)
 fi
 
 for DIR in $COMMIT_DIRS; do

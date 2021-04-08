@@ -57,3 +57,41 @@ working on getting Certbot running alongside nginx instead. More information:
 
 - [SSL/TLS certificates in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https)
 - [Certbot Rate Limits](https://letsencrypt.org/docs/rate-limits/)
+
+
+
+
+---
+
+Gonna put this under a "read more" button somewhere
+
+### About the Model
+
+The computer uses an exhaustive search algorithm to consider all possible
+sequences of legal plays. Whenever it's presented with a choice, it clones the
+whole game and tries all options simultaneously. Exhaustive search is
+computationally demanding, but it's also straightforward, flexible, and
+guaranteed to cast Primeval Titan on the earliest possible turn.
+
+For example, an experienced player can generally eyeball whether to choose land
+or nonland for Abundant Harvest. But spelling out that choice explicitly for
+the computer would be tedious and fragile -- a calculation based on what turn
+it is, what's in our hand, and even the contents of the deck. Instead of all
+that, the computer makes two clones of the game. The first chooses land, the
+second chooses nonland, and they proceed independently from there. If either
+clone ends up casting turn-three Primeval Titan down the line, it's pretty safe
+to say that a human player could have done so as well.
+
+That said, please don't expect the computer to teach you good sequencing! If
+it's possible to cast Primeval Titan on turn three, the computer is guaranteed
+to find a way to do so. But there are often several different ways to get
+there, and there's no guarantee the computer will pick the best one.
+
+
+
+It's notorious for skipping "unnecessary" land drops and casting extra copies of Summoner's Pact.
+
+
+
+
+Computer doesn't know the difference between a good line and a nonsense line that gets there on the same turn.

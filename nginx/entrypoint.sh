@@ -1,10 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
+# Verify certbot is installed
+certbot --help
+
+# To use certbot, remove the flag. Then nginx will run in the background and
+# certbot will run in the foreground when we get to it
 nginx -g 'daemon off;'
 
-exit 1
-
-# Note: use --dry-run to avoid hitting request limits
+# Note: use --dry-run to avoid hitting request limits during development
 certbot \
     --non-interactive \
     --agree-tos \
