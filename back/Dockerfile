@@ -1,6 +1,6 @@
 FROM golang
 
-ARG VERSION=v1.1.0
+ARG VERSION=v1.1.1
 
 RUN go get github.com/charles-uno/mtgserver
 RUN cd pkg/mod/github.com/charles-uno/mtgserver\@${VERSION} && go build main.go
@@ -11,4 +11,5 @@ RUN cp -p \
     pkg/mod/github.com/charles-uno/mtgserver\@${VERSION}/decklist.txt \
     /app
 WORKDIR /app
+EXPOSE 5001
 CMD ["./main"]

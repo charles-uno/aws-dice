@@ -10,8 +10,8 @@ $shadow-color: #fff;
 $accent-color: #069;
 
 $fs-title: 35px;
-$fs-large: 24px;
-$fs-body: 26px;
+$fs-large: 26px;
+$fs-body: 20px;
 $fs-small: 12px;
 
 $navbar-pad: 6px;
@@ -26,6 +26,7 @@ $button-radius: 5px;
 
 $paper-width: 1000px;
 $paper-side-pad: 20px;
+$plot-height: 400px;
 
 $vspace-s: 5px;
 $vspace-m: 20px;
@@ -192,7 +193,7 @@ body {
     height: $button-height;
     background-color: $shadow-color;
     width: 100%;
-    border-radius: 5px;
+    border-radius: $button-radius;
     font-size: $fs-large;
     color: $accent-color;
 }
@@ -269,6 +270,8 @@ body {
 
 .play-blue {background-color: #dff;}
 
+.play-magenta {background-color: #fdf;}
+
 .play-line {
     margin: $vspace-s 0;
     text-align: left;
@@ -282,6 +285,17 @@ body {
 
 .play-line:last-child {
     margin-bottom: 0;
+}
+
+.plot-wrapper {
+    border: 1px solid $accent-color;
+    border-radius: $button-radius;
+    overflow: hidden;
+    margin-top: $vspace-l;
+    margin-bottom: $vspace-m;
+    width: 100%;
+    height: $plot-height;
+    max-height: 20vh;
 }
 
 .turn-start {

@@ -6,3 +6,4 @@
 
 # Used for figuring out what's deployed locally
 hash.txt
+data/*

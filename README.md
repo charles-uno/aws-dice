@@ -59,7 +59,12 @@ working on getting Certbot running alongside nginx instead. More information:
 - [Certbot Rate Limits](https://letsencrypt.org/docs/rate-limits/)
 
 
+## Next Steps
 
+- Add a nice popup (or something) for an "about" section.
+- Update the copyright to make it clear that WOTC owns the images! Look at what Scryfall does.
+- Make the deck list visible.
+- Put the graph above the play details. Probably want to move up the outcome as well. Maybe hide the play details by default?
 
 ---
 
