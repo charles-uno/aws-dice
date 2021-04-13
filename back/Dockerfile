@@ -1,6 +1,6 @@
 FROM golang
 
-ARG VERSION=v1.1.1
+ARG VERSION=v1.1.2
 
 RUN go get github.com/charles-uno/mtgserver
 RUN cd pkg/mod/github.com/charles-uno/mtgserver\@${VERSION} && go build main.go

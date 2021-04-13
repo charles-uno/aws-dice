@@ -2,6 +2,7 @@ version: "3.9"
 services:
   nginx:
     image: charlociraptor/flashcards-nginx
+    restart: always
     ports:
     - "80:80"
     - "443:443"
@@ -10,11 +11,13 @@ services:
     - backend
   frontend:
     image: charlociraptor/flashcards-front
+    restart: always
     ports:
     - "5000:5000"
     depends_on:
     - backend
   backend:
     image: charlociraptor/flashcards-back
+    restart: always
     ports:
     - "5001:5001"
