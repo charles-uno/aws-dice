@@ -28,6 +28,17 @@ else
     fi
 fi
 
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+DIFF_SIZE=$(git diff | wc -l | xargs)
+if [[ "$BRANCH_NAME" == "main" && "$ADDRESS" == "localhost" && "$DIFF_SIZE" != "0" ]]; then
+    echo "WARNING: shouldn't you be working in a branch?"
+    sleep 60
+fi
+if [[ "$BRANCH_NAME" != "main" && "$ADDRESS" != "localhost" ]]; then
+    echo "WARNING: do you really want to deploy a dev branch to $ADDRESS?"
+    sleep 60
+fi
+
 function ssh_helper {
     if [[ "$ADDRESS" == "localhost" ]]; then
         $@
