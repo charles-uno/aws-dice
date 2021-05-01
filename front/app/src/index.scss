@@ -1,18 +1,18 @@
 $sans-font: 'Roboto', sans-serif;
 $mono-font: 'Cutive Mono', monospace;
-$head-font: 'Chango', cursive;
-$head-font: 'Fredoka One', cursive;
-$logo-font: $head-font;
+$navbar-font: 'Chango', cursive;
+$navbar-font: 'Fredoka One', cursive;
+$logo-font: $navbar-font;
 
 $text-color: #222;
 $paper-color: #ddd;
 $shadow-color: #fff;
 $accent-color: #069;
 
-$fs-title: 35px;
+$fs-title: 18px;
 $fs-large: 26px;
 $fs-body: 20px;
-$fs-small: 12px;
+$fs-small: 16px;
 
 $navbar-pad: 6px;
 $navbar-height: $fs-title + 2*$navbar-pad;
@@ -24,8 +24,8 @@ $button-pad: 10px;
 $button-height: $fs-large + 2*$button-pad;
 $button-radius: 5px;
 
-$paper-width: 1000px;
-$paper-side-pad: 20px;
+$column-width: 800px;
+$column-pad: 30px;
 $plot-height: 400px;
 
 $vspace-s: 5px;
@@ -36,10 +36,12 @@ $vspace-l: 40px;
 
 a {
     text-decoration: none;
+    color: $accent-color;
 }
 
 a, a:focus, a:visited, a:hover {
     text-decoration: none;
+    color: $accent-color;
 }
 
 *, *:before, *:after {
@@ -52,31 +54,62 @@ html, body, div {
     border: 0;
 }
 
-/* Overall layout, header, footer ------------------------------------------ */
-
-html {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "body";
+h2 {
+    font-size: $fs-large;
+    margin-top: $vspace-l;
+    margin-bottom: $vspace-m;
 }
 
-body {
-    grid-area: body;
+.justify {
+    text-align: justify;
+}
+
+/* Overall layout ---------------------------------------------------------- */
+
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
 #root {
     height: 100%;
     width: 100%;
-    display: grid;
-    grid-template-columns: auto minmax(100%, $paper-width) auto;
-    grid-template-rows: auto $foot-height;
-    grid-template-areas:
-        ". main ."
-        ". foot .";
+    padding-top: $navbar-height;
+    text-align: center;
 }
+
+.section {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    max-width: $column-width;
+    padding: 0 $column-pad;
+}
+
+.navbar {
+    width: 100%;
+    height: $navbar-height;
+    padding: $navbar-pad 0;
+    z-index: 99;
+    top: 0px;
+    position: fixed;
+    a {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 $column-pad;
+        height: $fs-title;
+        overflow: visible;
+        text-align: bottom;
+    }
+}
+
+.about-toggle-wrap {
+    width: 100%;
+    text-align: center;
+}
+
+/* Autocard ---------------------------------------------------------------- */
 
 .autocard-wrap {
     position: fixed;
@@ -87,54 +120,34 @@ body {
     height: 200%;
 }
 
-.main {
-    grid-area: main;
-    padding: $paper-side-pad;
-    padding-top: $navbar-height + $paper-side-pad;
-    max-width: $paper-width;
+.autocard-wrap {
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
     text-align: center;
-    width: 100%;
-    margin: 0 auto;
-//    border: 2px solid green;
 }
 
-.foot {
-    grid-area: foot;
-    padding: ($foot-height - $fs-small)/2;
-    height: $foot-height;
-    max-width: $paper-width;
-    width: 100%;
-    margin: 0 auto;
-//    border: 1px solid red;
-}
-
-.head {
-    width: 100%;
-    height: $navbar-height;
-    padding: $navbar-pad 0;
-    z-index: 99;
-    top: 0px;
-    position: fixed;
-    a {
-        display: block;
-        width: 100%;
-        max-width: $paper-width;
-        margin: 0 auto;
-        padding: 0 $paper-side-pad;
-        height: $fs-title;
-        overflow: visible;
-        text-align: bottom;
-    }
+.autocard {
+    z-index: 999;
+    width: 500px;
+    max-width: 50%;
+    border-radius: 5%;
+    overflow: hidden;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 /* Fonts and colors -------------------------------------------------------- */
 
-body {
-    background-color: $shadow-color;
+html, body {
+    background-color: $paper-color;
     font-family: $sans-font;
 }
 
-.head {
+.navbar {
+    text-align: center;
     background-color: $accent-color;
     font-family: $logo-font;
     font-size: $fs-title;
@@ -148,24 +161,19 @@ body {
     }
 }
 
-.main, .foot {
-    background-color: $paper-color;
-}
-
-.foot {
-    text-align: center;
+.about-toggle {
+    text-transform: lowercase;
     font-size: $fs-small;
     line-height: 1;
-    vertical-align: middle;
-    color: $text-color;
-    a { color: $accent-color; &:hover { color: $text-color; } }
-    display: flex;
-    justify-content: space-between;
+    border: 0;
+    background: none;
+    color: $accent-color;
+    height: $fs-small + 2*$vspace-m;
 }
 
-.foot-elt {
-    padding: 0 $paper-side-pad;
-//    border: 1px solid brown;
+.about {
+    font-size: $fs-body;
+    text-align: justify;
 }
 
 .mana-symbol {
@@ -175,6 +183,17 @@ body {
 .mana-expr {
     white-space: nowrap;
 }
+
+.play-red {background-color: #fdd;}
+
+.play-yellow {background-color: #ffd;}
+
+.play-green {background-color: #dfd;}
+
+.play-blue {background-color: #dff;}
+
+.play-magenta {background-color: #fdf;}
+
 
 /* App elements ------------------------------------------------------------ */
 
@@ -209,14 +228,12 @@ body {
     margin-top: $vspace-l;
     margin-bottom: $vspace-m;
     padding: 0;
-//    border: 1px solid green;
 }
 
 .error-message, .play-outcome, .turn-order {
     margin: 0;
     margin-top: $vspace-s;
     padding: $button-pad 0;
-//    border: 1px solid magenta;
     width: 100%;
     font-size: $fs-large;
     height: $button-height;
@@ -234,7 +251,6 @@ body {
     /* Percentage is relative to the width. Enforces aspect ratio. */
     padding-top: 26.4%;
     position: relative;
-//    border: 1px solid blue;
 }
 
 .hand-cards {
@@ -258,24 +274,12 @@ body {
 .play-lines {
     margin: $vspace-m 0;
     padding: 0;
-//    border: 1px solid red;
     font-size: $fs-body;
 }
-
-.play-red {background-color: #fdd;}
-
-.play-yellow {background-color: #ffd;}
-
-.play-green {background-color: #dfd;}
-
-.play-blue {background-color: #dff;}
-
-.play-magenta {background-color: #fdf;}
 
 .play-line {
     margin: $vspace-s 0;
     text-align: left;
-//    border: 1px solid green;
     font-size: $fs-body;
 }
 
@@ -307,26 +311,4 @@ body {
     &:hover {
         color: $text-color;
     }
-}
-
-.autocard-wrap {
-    z-index: 998;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: none;
-    text-align: center;
-}
-
-.autocard {
-    z-index: 999;
-    width: 500px;
-    max-width: 50%;
-    border-radius: 5%;
-    overflow: hidden;
-}
-
-.autocard {
-    position: relative;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
 }

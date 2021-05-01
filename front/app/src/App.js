@@ -12,6 +12,7 @@ class Flashcards extends React.Component {
             console.log("WARNING: Assuming no access to back end");
         }
         this.state = {
+            about: false,
             autocard: {name: null, style: {}},
             opener: null,
             gameplay: null,
@@ -32,16 +33,27 @@ class Flashcards extends React.Component {
     onKeyPress(event){
         // Esc
         if(event.keyCode === 27) {
-            this.hideAutocard(event)
+            this.hideAbout(event);
+            this.hideAutocard(event);
         }
     }
 
     render() {
-        return [
-            this.renderAutocard(),
-            this.renderMain(),
-            this.renderFoot()
-        ];
+        if (this.state.about) {
+            return [
+                this.renderAutocard(),
+                this.renderAboutToggle("toggle-top"),
+                this.renderAbout(),
+                this.renderAboutToggle("toggle-bottom")
+            ];
+        } else {
+            return [
+                this.renderAutocard(),
+                this.renderHand(),
+                this.renderPlay(),
+                this.renderAboutToggle("toggle-bottom")
+            ]
+        }
     }
 
     renderAutocard() {
@@ -56,37 +68,94 @@ class Flashcards extends React.Component {
         </div>
     }
 
-    renderMain() {
-        return <div className="main" key="main">
-            {this.renderHand()}
-            {this.renderGraph()}
-            {this.renderPlay()}
+    renderAbout() {
+        return <div className="justify section" key="about">
+<h2 key="model-head">About the Model</h2>
+<p className="about" key="model-0">
+The MTG deck <a href="https://www.mtggoldfish.com/archetype/amulet-titan">Amulet Titan</a> is known for its complex play patterns.
+This app presents users with sample opening hands, then shuffles the deck and solves for a sequence of plays to cast the titular {this.card("Primeval Titan", "Titan")} as quickly as possible.
+Think of it like mulligan flashcards: decide for yourself whether you would keep the hand, then play it out a few times to see what the numbers say!
+</p>
+<p className="about" key="model-1">
+Sequencing is determined via exhaustive search.
+Whenever the computer is faced with a choice, it tries both options in parallel and keeps whichever works out best.
+For example, an experienced player can generally eyeball whether to choose land or nonland for {this.card("Abundant Harvest")}, but spelling out the logic explicitly for the computer is tedious and fragile.
+Instead of worrying about strategy and synergy, the computer splits the game into two copies.
+The first chooses land, the second chooses nonland, and they proceed independently from there.
+If either copy ends up casting turn-three {this.card("Primeval Titan")} down the line, it's pretty safe
+to say that a human player could have done so as well.
+</p>
+<p className="about" key="model-2">
+Exhaustive search is straightforward and flexible, but also computationally demanding.
+Several approximations are made in the interest of performance.
+Oddball singletons like {this.card("Boros Garrison")}, {this.card("Cavern of Souls")}, and {this.card("Vesuva")} are excluded.
+Only green mana is tracked, so there's no transmuting with {this.card("Tolaria West")}.
+There's no need to worry about the non-mana abilities on {this.card("Radiant Fountain")} and {this.card("Sunhome, Fortress of the Legion", "Sunhome")}, so they're represented by {this.card("Wastes")}. Similarly, {this.card("Bojuka Bog")} is used as a stand-in for any non-green land that enters the battlefield tapped, such as {this.card("Valakut, the Molten Pinnacle", "Valakut")}.
+These approximations can make opening hands look a bit odd, but the resulting numbers turn out to be nearly identical.
+</p>
+<p className="about" key="model-3">
+That said, please don't expect the computer to teach you good sequencing!
+If it's possible to cast {this.card("Primeval Titan")} on turn three, this model is guaranteed to find a way to do so.
+But there are often several different ways to get there.
+There's no guarantee the computer will pick the best one.
+Several corrections are included to suppress non-human play patterns, but from time to time it'll still choose a "solution" that's needlessly bizarre or reckless.
+Consider it a starting point, not an authority.
+</p>
+<h2 key="app-head">Implementation and Deployment</h2>
+<p className="about" key="app-1">
+This app uses a React front end and a Go back end behind an nginx proxy.
+Each element is packaged in its own container, then deployed to AWS Lightsail via Docker Compose.
+Automatic deployment on commit via GitHub Actions is a work in progress.
+</p>
+<p className="about" key="app-2">
+Source code for the front end and deployment is available <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md" key="frontend-link">here</a>.
+The back end is published as a Go package <a href="https://github.com/charles-uno/mtgserver/blob/main/README.md" key="backend-link">here</a>.
+It's a stripped-down version of the model written up <a href="https://charles.uno/amulet-simulation" key="amulet-link">here</a> and <a href="https://charles.uno/valakut-simulation" key="valakut-link">here</a>.
+</p>
+<h2 key="copy-head">Fine Print</h2>
+<p className="about" key="copy-1">
+This page &copy; Charles Fyfe 2021, along with the source code linked above.
+Card names and images owned by <a href="https://magic.wizards.com">Wizards of the Coast</a>.
+This site is not affiliated.
+</p>
         </div>
     }
 
-    renderFoot() {
-        return <div className="foot" key="foot">
-            <span className="foot-elt center">
-                &copy; Charles Fyfe 2021
-            </span>
-            <span className="foot-elt">
-                <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md">Source code on GitHub</a>
-            </span>
-            <span className="foot-elt">
-                 <a href="https://charles.uno/amulet-simulation">About the model</a>
-            </span>
+    showAbout() {
+        this.setState({about: true});
+        window.scrollTo(0, 0);
+    }
+
+    hideAbout() {
+        this.setState({about: false});
+    }
+
+    renderAboutToggle(key) {
+        let text = "Read more";
+        let onclick = this.showAbout.bind(this);
+        if (this.state.about) {
+            text = "Read less";
+            onclick = this.hideAbout.bind(this);
+        }
+        return <div className="about-toggle-wrap" key={key}>
+            <button className="about-toggle" onClick={onclick}>
+                {text}
+            </button>
         </div>
     }
 
     renderHand() {
-        return <div className="hand-wrap">
-            {this.renderHandButton()}
-            <div className="hand-cards-wrap">
-                <div className="hand-cards">
-                    {this.renderHandImages()}
+        return <div className="section" key="hand">
+            <div className="hand-wrap" key="1">
+                {this.renderHandButton()}
+                <div className="hand-cards-wrap">
+                    <div className="hand-cards">
+                        {this.renderHandImages()}
+                    </div>
                 </div>
+                {this.renderHandText()}
+                {this.renderGraph()}
             </div>
-            {this.renderHandText()}
         </div>
     }
 
@@ -136,10 +205,12 @@ class Flashcards extends React.Component {
         if (this.state.opener === null) {
             return "";
         }
-        return <div className="play-wrap">
-            {this.renderPlayButton()}
-            {this.renderPlayLines()}
-            {this.renderPlayOutcome()}
+        return <div className="section" key="play">
+            <div className="play-wrap" key="2">
+                {this.renderPlayButton()}
+                {this.renderPlayLines()}
+                {this.renderPlayOutcome()}
+            </div>
         </div>
     }
 
@@ -194,7 +265,7 @@ class Flashcards extends React.Component {
                     </span>
                 );
             } else if (wordRaw.type === "land" || wordRaw.type === "spell" || wordRaw.type === "card") {
-                words.push(this.card(wordRaw.text, i));
+                words.push(this.card(wordRaw.text));
             } else {
                 if (wordRaw.text.toLowerCase().startsWith("turn")) {
                     classNames += " turn-start";
@@ -240,9 +311,12 @@ class Flashcards extends React.Component {
         </div>
     }
 
-    card(cardName, key=null) {
-        return <span className="card" key={key} onClick={this.showAutocard.bind(this, cardName)}>
-            {cardName}
+    card(cardName, text=null) {
+        if (!text) {
+            text = cardName;
+        }
+        return <span className="card" key={text} onClick={this.showAutocard.bind(this, cardName)}>
+            {text}
         </span>
     }
 
@@ -449,8 +523,6 @@ class Flashcards extends React.Component {
     cardUri(c) {
         if (c === null) {
             c = "back";
-        } else if (c === "Abundant Harvest") {
-            return "https://c1.scryfall.com/file/scryfall-cards/normal/front/1/6/16782095-0b7f-4489-8a97-b74f8efef352.jpg";
         }
         return "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + c;
     }
