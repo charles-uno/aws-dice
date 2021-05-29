@@ -78,7 +78,7 @@ Think of it like mulligan flashcards: decide for yourself whether you would keep
 </p>
 <p className="about" key="model-1">
 Sequencing is determined via exhaustive search.
-Whenever the computer is faced with a choice, it tries both options in parallel and keeps whichever works out best.
+Whenever the computer is faced with a choice, it tries both options and keeps whichever works out best.
 For example, an experienced player can generally eyeball whether to choose land or nonland for {this.card("Abundant Harvest")}, but spelling out the logic explicitly for the computer is tedious and fragile.
 Instead of worrying about strategy and synergy, the computer splits the game into two copies.
 The first chooses land, the second chooses nonland, and they proceed independently from there.
@@ -104,8 +104,8 @@ Consider it a starting point, not an authority.
 <h2 key="app-head">Implementation and Deployment</h2>
 <p className="about" key="app-1">
 This app uses a React front end and a Go back end behind an nginx proxy.
-Each element is packaged in its own container, then deployed to AWS Lightsail via Docker Compose.
-Automatic deployment on commit via GitHub Actions is a work in progress.
+Each component is built into its own container; containers are managed using Docker Compose.
+Updates are deployed to AWS on commit via GitHub Actions.
 </p>
 <p className="about" key="app-2">
 Source code for the front end and deployment is available <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md" key="frontend-link">here</a>.
@@ -523,6 +523,9 @@ This site is not affiliated.
     cardUri(c) {
         if (c === null) {
             c = "back";
+        }
+        if (c === "Urza's Saga") {
+            return "https://c1.scryfall.com/file/scryfall-cards/large/front/c/1/c1e0f201-42cb-46a1-901a-65bb4fc18f6c.jpg?1621127724";
         }
         return "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=" + c;
     }

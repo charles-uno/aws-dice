@@ -58,6 +58,7 @@ h2 {
     font-size: $fs-large;
     margin-top: $vspace-l;
     margin-bottom: $vspace-m;
+    white-space: nowrap;
 }
 
 .justify {
@@ -194,6 +195,13 @@ html, body {
 
 .play-magenta {background-color: #fdf;}
 
+.card, .about-toggle, .button {
+    color: $accent-color;
+    &:hover {
+        color: $text-color;
+    }
+    cursor: pointer;
+}
 
 /* App elements ------------------------------------------------------------ */
 
@@ -214,7 +222,6 @@ html, body {
     width: 100%;
     border-radius: $button-radius;
     font-size: $fs-large;
-    color: $accent-color;
 }
 
 .button:not(.button-disabled) {
@@ -304,11 +311,4 @@ html, body {
 
 .turn-start {
     margin-top: $vspace-m;
-}
-
-.card {
-    color: $accent-color;
-    &:hover {
-        color: $text-color;
-    }
 }
