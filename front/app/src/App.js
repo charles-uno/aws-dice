@@ -265,7 +265,7 @@ This site is not affiliated.
                     </span>
                 );
             } else if (wordRaw.type === "land" || wordRaw.type === "spell" || wordRaw.type === "card") {
-                words.push(this.card(wordRaw.text));
+                words.push(this.card(wordRaw.target, wordRaw.text));
             } else {
                 if (wordRaw.text.toLowerCase().startsWith("turn")) {
                     classNames += " turn-start";
