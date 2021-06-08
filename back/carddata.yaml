@@ -1,0 +1,125 @@
+- name: Abundant Harvest
+  casting_cost:
+    green: 1
+    total: 1
+  type: sorcery
+  can_be_titan: true
+  always_cast: true
+- name: Adventurous Impulse
+  casting_cost:
+    green: 1
+    total: 1
+  type: sorcery
+  can_be_titan: true
+  always_cast: true
+- name: Amulet of Vigor
+  casting_cost:
+    green: 0
+    total: 1
+  type: artifact
+  always_cast: true
+- name: Arboreal Grazer
+  casting_cost:
+    green: 1
+    total: 1
+  type: creature
+- name: Azusa, Lost but Seeking
+  casting_cost:
+    green: 1
+    total: 3
+  type: creature
+- name: Bojuka Bog
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: true
+- name: Castle Garenbrig
+  type: land
+  taps_for:
+    green: 1
+    total: 1
+  enters_tapped: true
+  activation_cost:
+    green: 3
+    total: 5
+- name: Crumbling Vestige
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: true
+- name: Dryad of the Ilysian Grove
+  casting_cost:
+    green: 1
+    total: 3
+  type: creature
+- name: Elvish Spirit Guide
+  casting_cost:
+    green: 0
+    total: 0
+  type: creature
+- name: Explore
+  casting_cost:
+    green: 1
+    total: 2
+  type: sorcery
+  can_be_titan: true
+- name: Forest
+  type: land
+  taps_for:
+    green: 1
+    total: 1
+  enters_tapped: false
+- name: Primeval Titan
+  casting_cost:
+    green: 2
+    total: 6
+  type: creature
+  can_be_titan: true
+  always_cast: true
+- name: Simic Growth Chamber
+  type: land
+  taps_for:
+    green: 1
+    total: 2
+  enters_tapped: true
+- name: Summoner's Pact
+  casting_cost:
+    green: 0
+    total: 0
+  type: instant
+  can_be_titan: true
+- name: Temple of Mystery
+  type: land
+  taps_for:
+    green: 1
+    total: 1
+  enters_tapped: true
+- name: Urza's Saga
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: false
+- name: Urza's Saga (II)
+  pretty: Urza's Saga
+  target: Urza's Saga
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: false
+- name: Valakut, the Molten Pinnacle
+  pretty: Valakut
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: true
+- name: Wastes
+  type: land
+  taps_for:
+    green: 0
+    total: 1
+  enters_tapped: false

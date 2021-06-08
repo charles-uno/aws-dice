@@ -1,15 +1,11 @@
 FROM golang
-
-ARG VERSION=v1.3.0
-
-RUN go get github.com/charles-uno/mtgserver
-RUN cd pkg/mod/github.com/charles-uno/mtgserver\@${VERSION} && go build main.go
+ARG DIR=/go/src/github.com/charles-uno/aws-practice/back
+RUN mkdir -p $DIR/lib
+COPY carddata.yaml decklist.txt go.mod main.go $DIR
+COPY lib $DIR/lib
+RUN cd $DIR && go mod tidy && go build main.go
 RUN mkdir -p /app
-RUN cp -p \
-    pkg/mod/github.com/charles-uno/mtgserver\@${VERSION}/main \
-    pkg/mod/github.com/charles-uno/mtgserver\@${VERSION}/carddata.yaml \
-    pkg/mod/github.com/charles-uno/mtgserver\@${VERSION}/decklist.txt \
-    /app
+RUN cd $DIR && cp -p carddata.yaml decklist.txt main /app
 WORKDIR /app
 EXPOSE 5001
 CMD ["./main"]
