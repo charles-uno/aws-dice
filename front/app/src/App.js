@@ -101,16 +101,79 @@ There's no guarantee the computer will pick the best one.
 Several corrections are included to suppress non-human play patterns, but from time to time it'll still choose a "solution" that's needlessly bizarre or reckless.
 Consider it a starting point, not an authority.
 </p>
-<h2 key="app-head">Implementation and Deployment</h2>
+<h2 key="app-list">The Decklist</h2>
+<p className="about" key="list-0">
+Below is the list used by this app. Don't worry too much about a difference here or there. Considering similar cards together helps the model run faster. Numbers look pretty much the same if (for example) we swap out an {this.card("Explore")} for an {this.card("Azusa, Lost but Seeking", "Azusa")}.
+</p>
+<table className="deck-list">
+    <tbody>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Abundant Harvest")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Amulet of Vigor")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Arboreal Grazer")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Dryad of the Ilysian Grove")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Explore")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Primeval Titan")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Summoner's Pact")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count"></td>
+        <td className="deck-list-name"></td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">5</td>
+        <td className="deck-list-name">{this.card("Bojuka Bog")} (includes {this.card("Tolaria West")} and {this.card("Valakut, the Molten Pinnacle", "Valakut")})</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Castle Garenbrig")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">6</td>
+        <td className="deck-list-name">{this.card("Forest")} (includes {this.card("Breeding Pool", "shocks")} and {this.card("Misty Rainforest", "fetches")})</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">8</td>
+        <td className="deck-list-name">{this.card("Simic Growth Chamber")} (includes {this.card("Gruul Turf")}, etc)</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">4</td>
+        <td className="deck-list-name">{this.card("Urza's Saga")}</td>
+      </tr>
+      <tr className="deck-list-line">
+        <td className="deck-list-count">5</td>
+        <td className="deck-list-name">{this.card("Wastes")}  (includes {this.card("Ghost Quarter")}, {this.card("Radiant Fountain")}, etc)</td>
+      </tr>
+    </tbody>
+</table>
+
+<h2 key="app-head">Implementation</h2>
 <p className="about" key="app-1">
 This app uses a React front end and a Go back end behind an nginx proxy.
 Each component is built into its own container; containers are managed using Docker Compose.
 Updates are deployed to AWS on commit via GitHub Actions.
 </p>
 <p className="about" key="app-2">
-Source code for the front end and deployment is available <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md" key="frontend-link">here</a>.
-The back end is published as a Go package <a href="https://github.com/charles-uno/mtgserver/blob/main/README.md" key="backend-link">here</a>.
-It's a stripped-down version of the model written up <a href="https://charles.uno/amulet-simulation" key="amulet-link">here</a> and <a href="https://charles.uno/valakut-simulation" key="valakut-link">here</a>.
+Source code is available <a href="https://github.com/charles-uno/aws-practice/blob/main/README.md" key="frontend-link">here</a>. Front-end, back-end, proxy, and deployment are all contained in the same repo. The back-end model is a stripped-down version from my previous work <a href="https://charles.uno/amulet-simulation" key="amulet-link">here</a> and <a href="https://charles.uno/valakut-simulation" key="valakut-link">here</a>.
 </p>
 <h2 key="copy-head">Fine Print</h2>
 <p className="about" key="copy-1">

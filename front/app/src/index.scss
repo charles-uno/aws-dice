@@ -172,6 +172,12 @@ html, body {
     height: $fs-small + 2*$vspace-m;
 }
 
+.deck-list-count, .deck-list-name {
+    height: $fs-small;
+    font-size: $fs-body;
+    padding: 0 5px;
+}
+
 .about {
     font-size: $fs-body;
     text-align: justify;
