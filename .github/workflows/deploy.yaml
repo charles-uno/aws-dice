@@ -47,6 +47,7 @@ jobs:
         DOCKER_PASS: ${{secrets.DOCKER_PASS}}
         DOCKER_USER: ${{secrets.DOCKER_USER}}
       with:
+        # We get a warning about this option, but it seems to work
         envs: DOCKER_USER,DOCKER_PASS
         command: cd blue-green/workdir && scripts/build-images.sh
         host: ${{secrets.AWS_ADDRESS}}
