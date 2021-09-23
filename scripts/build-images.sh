@@ -22,6 +22,8 @@ if [[ "$COLOR" == "" ]]; then
     exit 1
 fi
 
+echo "DOCKER USERNAME: $DOCKER_USER"
+
 DOCKER_DIRS=$(ls */Dockerfile | cut -d '/' -f 1)
 for DIR in $DOCKER_DIRS; do
     echo "$DIR : building..."
