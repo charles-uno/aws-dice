@@ -8,13 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     name: make sure the color exists before the first time we try to load it
     steps:
-      - shell: bash
-        run: cp scripts/color-blue.yml color.yml
-      - name: update color file
-        uses: actions/upload-artifact@v2
-        with:
-          name: color-yml
-          path: color.yml
+    - name: repo checkout
+      uses: actions/checkout@v2
+    - shell: bash
+      run: cp scripts/color-blue.yml color.yml
+    - name: update color file
+      uses: actions/upload-artifact@v2
+      with:
+        name: color-yml
+        path: color.yml
 
   load_color:
     runs-on: ubuntu-latest
