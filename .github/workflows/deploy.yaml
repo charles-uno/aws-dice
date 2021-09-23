@@ -47,11 +47,11 @@ jobs:
         DOCKER_PASS: ${{secrets.DOCKER_PASS}}
         DOCKER_USER: ${{secrets.DOCKER_USER}}
       with:
+        envs: DOCKER_USER,DOCKER_PASS
         command: cd blue-green/workdir && scripts/build-images.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
-        envs: DOCKER_USER,DOCKER_PASS
 
   refresh_service:
     runs-on: ubuntu-latest
