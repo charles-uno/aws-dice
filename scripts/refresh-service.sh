@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Figure out which color we just deployed
-COLOR=$(grep color scratch/color.yml | awk '{print $2}')
+# We're deploying to the next color, not steamrolling the current stable one
+COLOR=$(grep next ../color.yml | awk '{print $2}')
 
-cd "$COLOR"
+cd ../"$COLOR"
 
 docker system prune -af
 docker-compose pull

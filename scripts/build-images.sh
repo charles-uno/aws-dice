@@ -14,7 +14,9 @@ fi
 
 STAMP=$(date +%s)
 
-COLOR=$(grep color color.yml | awk '{print $2}')
+# We're deploying to the next color, not steamrolling the current stable one
+COLOR=$(grep next ../color.yml | awk '{print $2}')
+
 if [[ "$COLOR" == "" ]]; then
     echo "UNKNOWN COLOR"
     exit 1

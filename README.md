@@ -61,11 +61,13 @@ will pull down whatever image was pushed most recently. If you need to run
 `docker-compose pull` manually in production, make sure that the `main` branch
 is the last one to have been built.
 
-## HTTPS and SSL
+## To Do
 
-HTTPS is a work in progress.
+Add a [badge][status_badge] for workflow status.
 
-AWS suggests setting up a load balancer in the GUI to enable HTTPS. We're
+[status_badge]: https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge
+
+HTTPS is a work in progress. AWS suggests setting up a load balancer in the GUI to enable HTTPS. We're
 working on getting Certbot running alongside nginx instead. More information:
 
 - [SSL/TLS certificates in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https)

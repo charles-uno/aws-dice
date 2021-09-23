@@ -4,64 +4,60 @@ on: [push, pull_request]
 
 jobs:
 
-  load_color:
-    runs-on: ubuntu-latest
-    steps:
-      - name: figure out which color we're deploying next
-        uses: actions/download-artifact@v2
-        with:
-          name: color-yml
-
-  build_images:
-    runs-on: ubuntu-latest
-    needs: load_color
-    steps:
-    - name: repo checkout
-      uses: actions/checkout@v2
-    - name: build and push images
-      env:
-        DOCKER_PASS: ${{secrets.DOCKER_PASS}}
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-      run: scripts/build-images.sh
+  # NOTE: not clear if there's a way to persist blue/green status between runs,
+  # so we do everything on the target server.
 
   deploy_files:
     runs-on: ubuntu-latest
-    needs: load_color
     steps:
     - name: repo checkout
       uses: actions/checkout@v2
-    - name: clean up previous scratch directory
+    - name: clean up previous workdir
       uses: fifsky/ssh-action@master
       with:
-        command: rm -rf ~/scratch
+        command: rm -rf ~/blue-green/workdir
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
-    - name: copy files to ~/scratch on aws
+    - name: copy repo over to ~/blue-green/workdir on aws
       uses: appleboy/scp-action@master
       with:
         host: ${{secrets.AWS_ADDRESS}}
         username: ec2-user
         key: ${{secrets.AWS_KEY}}
-        target: "~/scratch/"
-    - name: move files into place, process templates
+        target: "~/blue-green/workdir/"
+    - name: determine which color we're deploying
       uses: fifsky/ssh-action@master
       with:
-        command: scripts/apply-color.sh
+        command: cd blue-green/workdir && scripts/apply-color.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
 
+  build_images:
+    runs-on: ubuntu-latest
+    needs: deploy_files
+    steps:
+    - name: build and push new images
+      uses: fifsky/ssh-action@master
+      env:
+        DOCKER_PASS: ${{secrets.DOCKER_PASS}}
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+      with:
+        command: cd blue-green/workdir && scripts/build-images.sh
+        host: ${{secrets.AWS_ADDRESS}}
+        user: ec2-user
+        key: ${{secrets.AWS_KEY}}
+        envs: DOCKER_USER,DOCKER_PASS
+
   refresh_service:
     runs-on: ubuntu-latest
-    needs:
-    - build_images
-    - deploy_files
+    needs: build_images
     steps:
-    - name: pull new images and restart docker compose
+    - name: restart docker compose
       uses: fifsky/ssh-action@master
       with:
-        command: scratch/scripts/refresh-service.sh
+        command: cd blue-green/workdir && scripts/refresh-service.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
@@ -73,22 +69,19 @@ jobs:
     - name: integration tests for new service
       uses: fifsky/ssh-action@master
       with:
-        command: scripts/test.sh
+        command: cd blue-green/workdir && scripts/test.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
 
-# TODO: toggle which color is on root, which is on dev
-
-  save_color:
+  toggle_color:
     runs-on: ubuntu-latest
     needs: test_service
-    name: toggle the color after each successful deployment
     steps:
-      - shell: bash
-        run: scripts/toggle.sh
-      - name: update color file
-        uses: actions/upload-artifact@v2
-        with:
-          name: color-indicator
-          path: color.txt
+    - name: toggle which color to deploy next
+      uses: fifsky/ssh-action@master
+      with:
+        command: cd blue-green/workdir && scripts/toggle-color.sh
+        host: ${{secrets.AWS_ADDRESS}}
+        user: ec2-user
+        key: ${{secrets.AWS_KEY}}
