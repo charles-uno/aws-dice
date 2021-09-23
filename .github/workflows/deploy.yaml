@@ -6,7 +6,6 @@ jobs:
 
   load_color:
     runs-on: ubuntu-latest
-    needs: init_color
     steps:
       - name: figure out which color we're deploying next
         uses: actions/download-artifact@v2
