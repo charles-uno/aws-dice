@@ -34,7 +34,7 @@ jobs:
     - name: clean up previous scratch directory
       uses: fifsky/ssh-action@master
       with:
-        command: rm -rf ~/scratch ||:
+        command: rm -rf ~/scratch
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
