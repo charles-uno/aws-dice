@@ -25,6 +25,7 @@ jobs:
         host: ${{secrets.AWS_ADDRESS}}
         username: ec2-user
         key: ${{secrets.AWS_KEY}}
+        source: "docker-compose-template.yml,scripts"
         target: "~/blue-green/workdir/"
     - name: determine which color we're deploying
       uses: fifsky/ssh-action@master
