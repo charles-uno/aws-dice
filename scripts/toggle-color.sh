@@ -1,11 +1,6 @@
 #!/bin/bash
 
-PREV_COLOR=$(cat color.txt)
+# Move the color we just deployed to color.yml for artifact upload
+NEXT_COLOR=$(grep next color.yml | awk '{print $2}')
 
-if [[ "$PREV_COLOR" == blue ]]; then
-    NEXT_COLOR=green
-else
-    NEXT_COLOR=blue
-fi
-
-echo "$NEXT_COLOR" > color.txt
+cp "scripts/color-$NEXT_COLOR.yml" color.yml

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Figure out which color we just deployed
-COLOR=$(cat color.txt)
+COLOR=$(grep color scratch/color.yml | awk '{print $2}')
 
 cd "$COLOR"
 

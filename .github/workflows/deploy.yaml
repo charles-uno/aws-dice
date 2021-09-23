@@ -4,20 +4,6 @@ on: [push, pull_request]
 
 jobs:
 
-  init_color:
-    runs-on: ubuntu-latest
-    name: make sure the color exists before the first time we try to load it
-    steps:
-    - name: repo checkout
-      uses: actions/checkout@v2
-    - shell: bash
-      run: cp scripts/color-blue.yml color.yml
-    - name: update color file
-      uses: actions/upload-artifact@v2
-      with:
-        name: color-yml
-        path: color.yml
-
   load_color:
     runs-on: ubuntu-latest
     needs: init_color
@@ -26,15 +12,19 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: color-yml
+
   build_images:
     runs-on: ubuntu-latest
     needs: load_color
     steps:
+    - name: repo checkout
+      uses: actions/checkout@v2
     - name: build and push images
       env:
         DOCKER_PASS: ${{secrets.DOCKER_PASS}}
         DOCKER_USER: ${{secrets.DOCKER_USER}}
       run: scripts/build-images.sh
+
   deploy_files:
     runs-on: ubuntu-latest
     needs: load_color
@@ -44,7 +34,7 @@ jobs:
     - name: clean up previous scratch directory
       uses: fifsky/ssh-action@master
       with:
-        command: rm -rf ~/scratch
+        command: rm -rf ~/scratch ||:
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
@@ -62,6 +52,7 @@ jobs:
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
+
   refresh_service:
     runs-on: ubuntu-latest
     needs:
@@ -71,7 +62,7 @@ jobs:
     - name: pull new images and restart docker compose
       uses: fifsky/ssh-action@master
       with:
-        command: scripts/refresh-service.sh
+        command: scratch/scripts/refresh-service.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}

@@ -14,7 +14,7 @@ fi
 
 STAMP=$(date +%s)
 
-COLOR=$(cat color.txt | xargs)
+COLOR=$(grep color color.yml | awk '{print $2}')
 if [[ "$COLOR" == "" ]]; then
     echo "UNKNOWN COLOR"
     exit 1
