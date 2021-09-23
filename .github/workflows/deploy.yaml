@@ -72,12 +72,16 @@ jobs:
 
   test_service:
     needs: refresh_service
+    steps:
+    - name: integration tests for new service
       uses: fifsky/ssh-action@master
       with:
         command: scripts/test.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
+
+# TODO: toggle which color is on root, which is on dev
 
   save_color:
     needs: test_service
