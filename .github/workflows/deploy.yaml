@@ -15,7 +15,7 @@ jobs:
     - name: clean up previous workdir
       uses: fifsky/ssh-action@master
       with:
-        script: |
+        command: |
           rm -rf ~/blue-green/workdir
           mkdir -p ~/blue-green/workdir
         host: ${{secrets.AWS_ADDRESS}}
