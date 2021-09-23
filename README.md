@@ -13,13 +13,10 @@ times to get a sense for how things tend to play out.
 This app uses a React frontend and a Go backend behind an nginx proxy. Each
 element is packaged into a Docker container; those containers are managed using
 Docker Compose. Updates are deployed to [AWS LightSail][AWS_lightsail] on
-commit via GitHub Actions.
-
-The Go package used by the backend is published [here][mtgserver]. It's a
-stripped-down version of the model I wrote up [a while back][amulet_article].
+commit via GitHub Actions. The backend is a slimmed-down version of the one I
+wrote up [a while back][amulet_article].
 
 [aws_lightsail]: https://lightsail.aws.amazon.com/
-[mtgserver_readme]: https://github.com/charles-uno/mtgserver/blob/main/README.md
 [amulet_article]: https://charles.uno/amulet-simulation/
 
 ## Setup
@@ -31,7 +28,6 @@ named `AWS_ADDRESS` and `AWS_KEY`. You'll also need to add HTTPS access to your
 
 [aws_account]: https://lightsail.aws.amazon.com/ls/webapp/account/keys
 [aws_firewall]: https://aws.amazon.com/blogs/compute/enhancing-site-security-with-new-lightsail-firewall-features/
-
 
 If you want to develop the front end on your machine directly (recommended)
 you'll need to [install ReactJS][install_react].

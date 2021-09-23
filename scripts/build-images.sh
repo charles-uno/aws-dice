@@ -2,7 +2,6 @@
 
 set -e
 
-
 # If credentials aren't set, we're probably working locally on a machine that's
 # already logged in.
 if [[ "$DOCKER_PASS" != "" ]]; then
@@ -15,11 +14,17 @@ fi
 
 STAMP=$(date +%s)
 
+COLOR=$(cat color.txt | xargs)
+if [[ "$COLOR" == "" ]]; then
+    echo "UNKNOWN COLOR"
+    exit 1
+fi
+
 DOCKER_DIRS=$(ls */Dockerfile | cut -d '/' -f 1)
 for DIR in $DOCKER_DIRS; do
     echo "$DIR : building..."
     SERVICE_NAME="$DIR"
-    IMAGE_NAME="$DOCKER_USER/flashcards-$SERVICE_NAME"
+    IMAGE_NAME="$DOCKER_USER/flashcards-$SERVICE_NAME-$COLOR"
     if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP"; then
         echo "$DIR : docker build failed"
         exit 1

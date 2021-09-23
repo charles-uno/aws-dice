@@ -1,0 +1,4 @@
+color: blue
+port1: 5000
+port2: 5001
+next: green
