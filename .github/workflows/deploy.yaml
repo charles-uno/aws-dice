@@ -47,7 +47,7 @@ jobs:
         DOCKER_PASS: ${{secrets.DOCKER_PASS}}
         DOCKER_USER: ${{secrets.DOCKER_USER}}
       with:
-        script: cd blue-green/workdir && scripts/build-images.sh
+        command: cd blue-green/workdir && scripts/build-images.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}

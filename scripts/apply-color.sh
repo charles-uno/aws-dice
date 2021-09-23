@@ -3,7 +3,7 @@
 # If there's no existing deployment, default to blue
 COLOR_FILE=~/blue-green/color.yml
 if [[ ! -f ../color.yml ]]; then
-    cp scripts/color-blue.yml ..
+    cp scripts/color-blue.yml ../color.yml
 fi
 
 # We're deploying to the next color, not steamrolling the current stable one
