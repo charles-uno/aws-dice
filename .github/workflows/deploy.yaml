@@ -29,10 +29,10 @@ jobs:
         key: ${{secrets.AWS_KEY}}
         source: "docker-compose-template.yml,scripts,front,back,nginx"
         target: "~/blue-green/workdir/"
-    - name: determine which color we're deploying
+    - name: move files into place
       uses: fifsky/ssh-action@master
       with:
-        command: cd blue-green/workdir && scripts/apply-color.sh
+        command: cd blue-green/workdir && scripts/install.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
@@ -49,7 +49,7 @@ jobs:
       with:
         # We get a warning about this option, but it seems to work
         envs: DOCKER_USER,DOCKER_PASS
-        command: cd blue-green/workdir && scripts/build-images.sh
+        command: cd blue-green/workdir && scripts/build.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
@@ -58,10 +58,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_images
     steps:
-    - name: restart docker compose
+    - name: launch freshly built images
       uses: fifsky/ssh-action@master
       with:
-        command: cd blue-green/workdir && scripts/refresh-service.sh
+        command: cd blue-green/workdir && scripts/refresh.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
@@ -82,10 +82,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: test_service
     steps:
-    - name: toggle which color to deploy next
+    - name: switch new deployment to main
       uses: fifsky/ssh-action@master
       with:
-        command: cd blue-green/workdir && scripts/toggle-color.sh
+        command: cd blue-green/workdir && scripts/promote.sh
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
