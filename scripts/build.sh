@@ -2,34 +2,15 @@
 
 set -e
 
-# For local debugging, we're sitting in the root of the repo. For deployments,
-# we're in ~/blue-green/workdir and we need to put files in place elsewhere
-function is_local {
-    if [[ $(whoami) == ec2-user ]]; then return 1; else return 0; fi
-}
+cd app/
+ENV_FILE=./.env
 
-if is_local; then
-    COLOR_YML=scripts/color-blue.yml
-else
-    COLOR_YML=../color.yml
-fi
-
-if [[ ! -f "$COLOR_YML" ]]; then
-    echo "missing color file!"
+source "$ENV_FILE"
+if [[ "$COLOR" == "" ]]; then
+    echo "missing color!"
     exit 1
 fi
-
-# We're deploying to the next color, not steamrolling the current stable one
-COLOR=$(grep next "$COLOR_YML" | awk '{print $2}')
-PORT1=$(grep port1 "$COLOR_YML" | awk '{print $2}')
-PORT2=$(grep port2 "$COLOR_YML" | awk '{print $2}')
-
-# Turn docker-compose-template.yml into a real docker compose file
-sed \
-    -e "s/PORT1/$PORT1/g" \
-    -e "s/PORT2/$PORT2/g" \
-    -e "s/COLOR/$COLOR/g" \
-    docker-compose-template.yml > docker-compose.yml
+echo "building: $COLOR"
 
 # Build and push the docker images
 
@@ -47,7 +28,13 @@ STAMP=$(date +%s)
 
 DOCKER_DIRS=$(ls */Dockerfile | cut -d '/' -f 1)
 for DIR in $DOCKER_DIRS; do
+    # Optionally, target names can be given. In that case, only build those
+    if [[ "$@" != "" && "$@" != *$DIR* ]]; then
+        echo "$DIR : skipping"
+        continue
+    fi
     echo "$DIR : building..."
+    cp "$ENV_FILE" "$DIR/"
     SERVICE_NAME="$DIR"
     IMAGE_NAME="$DOCKER_USER/flashcards-$SERVICE_NAME-$COLOR"
     if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP"; then

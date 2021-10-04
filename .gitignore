@@ -8,6 +8,5 @@
 hash.txt
 data/*
 *.pem
-color.yml
-docker-compose.yml
 blue-green
+.env

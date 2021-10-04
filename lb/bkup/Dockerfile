@@ -1,7 +1,6 @@
 FROM nginx:alpine
 RUN rm -f /etc/nginx/conf.d/*
 EXPOSE 80
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Install certbot to handle HTTP -> HTTPS
 RUN apk add \
     build-base \
@@ -15,6 +14,7 @@ RUN pip3 install --upgrade pip
 RUN export CRYPTOGRAPHY_DONT_BUILD_RUST=1 && pip3 install certbot-nginx
 RUN mkdir /etc/letsencrypt
 RUN mkdir -p /workdir
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /workdir/entrypoint.sh
 RUN chmod +x /workdir/entrypoint.sh
 CMD ["/workdir/entrypoint.sh"]

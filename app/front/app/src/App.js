@@ -3,7 +3,6 @@ import React from 'react';
 import axios from 'axios';
 import Chart from "react-google-charts";
 
-
 class Flashcards extends React.Component {
 
     constructor(props) {
@@ -449,7 +448,7 @@ This site is not affiliated.
             error: {location: null, text: null}
         });
         try {
-            const response = await axios.get(`/api/hand`);
+            const response = await axios.get(this.backEndUrl() + `api/hand`);
             this.setState({opener: response.data});
             this.initStats(response.data);
         } catch (err) {
@@ -486,7 +485,7 @@ This site is not affiliated.
         });
         try {
             let payload = this.state.opener;
-            const response = await axios.post(`/api/play`, payload);
+            const response = await axios.post(this.backEndUrl() + `api/play`, payload);
             this.setState({gameplay: response.data});
             this.updateStats(response.data);
         } catch (err) {
@@ -595,6 +594,18 @@ This site is not affiliated.
 
     manaUri(m) {
         return "https://gatherer.wizards.com/Handlers/Image.ashx?size=medium&type=symbol&name=" + m;
+    }
+
+    backEndUrl() {
+
+        console.log(process.env);
+
+        let color = process.env.REACT_APP_COLOR;
+        if (color === undefined) {
+            return "http://host.docker.internal/";
+        } else {
+            return "http://flashcards.charles.uno/" + color + "/"
+        }
     }
 
 }

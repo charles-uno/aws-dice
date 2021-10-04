@@ -1,20 +1,26 @@
 #!/bin/bash
 
-# Everything gets copied over into ~/blue-green/workdir
-# Move files into ~/blue-green/blue or ~/blue-green/green
+set -e
 
-# Move files
-if [[ $(whoami) != ec2-user ]]; then
-    echo "no-op for local work"
+# We start with everything in blue-green/workdir
+
+# If we don't have a color in place, pick one
+ENV_FILE=../.env
+if [[ ! -f "$ENV_FILE" ]]; then
+    cp scripts/blue.env "$ENV_FILE"
 fi
 
-# If there's no existing deployment, default to blue
-if [[ ! -f ../color.yml ]]; then
-    cp scripts/color-blue.yml ../color.yml
+# Figure out which color we're installing
+source "$ENV_FILE"
+if [[ "$COLOR" == "" ]]; then
+    echo "missing color!"
+    exit 1
 fi
+echo "installing: $COLOR"
 
-# We're deploying to the next color, not steamrolling the current stable one
-COLOR=$(grep next ../color.yml | awk '{print $2}')
+# App and load balancer both need to know which color we're deploying
+cp "$ENV_FILE" app/
+cp "$ENV_FILE" lb/
 
 # Clean up any existing content in our color directory and populate it
 rm -rf ../"$COLOR"

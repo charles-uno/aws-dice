@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Verify certbot is installed
-certbot --help
+# certbot --help
 
 # To use certbot, remove the flag. Then nginx will run in the background and
 # certbot will run in the foreground when we get to it
