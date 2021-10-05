@@ -1,0 +1,13 @@
+---
+test_name: Make sure the back end is up and running
+
+stages:
+  - name: Make sure we can touch it
+    request:
+      url: "http://localhost:{tavern.env_vars.PORT_BACK}/api/e2e"
+      method: GET
+    response:
+      status_code: 200
+      json:
+        turn: !anyint
+        onThePlay: !anybool

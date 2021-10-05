@@ -4,11 +4,11 @@ services:
     image: charlociraptor/flashcards-front-${COLOR}
     restart: always
     ports:
-    - "${PORT1}:5000"
+    - "${PORT_FRONT}:5000"
     depends_on:
     - backend
   backend:
     image: charlociraptor/flashcards-back-${COLOR}
     restart: always
     ports:
-    - "${PORT2}:5001"
+    - "${PORT_BACK}:5001"

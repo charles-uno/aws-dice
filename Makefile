@@ -4,9 +4,11 @@ COLOR := green
 local:
 	rm -rf blue-green ||:
 	mkdir -p blue-green/workdir
-	cp -r app lb scripts blue-green/workdir/
+	rsync -r --exclude node_modules app lb scripts blue-green/workdir/
 	cp scripts/$(COLOR).env blue-green/.env
-	echo "REACT_APP_LOCAL=true" >> blue-green/.env
+	cp blue-green/.env blue-green/workdir/
+	cp blue-green/.env blue-green/workdir/app/
+	cp blue-green/.env blue-green/workdir/lb/
 
 # Build and push images, move files into place
 build:
@@ -25,5 +27,5 @@ promote:
 	cd blue-green/workdir && ./scripts/promote.sh
 
 down:
-	cd blue-green/$COLOR/app && docker-compose down
-	cd blue-green/$COLOR/lb && docker-compose down
+	cd blue-green/$(COLOR)/app && docker-compose down
+	cd blue-green/$(COLOR)/lb && docker-compose down

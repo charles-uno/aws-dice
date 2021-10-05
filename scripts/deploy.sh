@@ -6,7 +6,12 @@ set -e
 source .env
 cd ../"$COLOR"
 
-# TODO: actually don't want to flip the load balancer until promote time
-
 make --directory app deploy
-make --directory lb deploy
+
+# If this is the first build, or we're working locally, we may need to launch
+# the load balancer too
+if ! docker ps | grep nginx; then
+    make --directory lb deploy
+fi
+
+# TODO: load balancer should be outside the transient app color directories
