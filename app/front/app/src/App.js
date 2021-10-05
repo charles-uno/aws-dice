@@ -448,7 +448,11 @@ This site is not affiliated.
             error: {location: null, text: null}
         });
         try {
-            const response = await axios.get(this.backEndUrl() + `api/hand`);
+            let url = this.backEndUrl() + `api/hand`;
+
+            console.log("target:", url);
+
+            const response = await axios.get(url);
             this.setState({opener: response.data});
             this.initStats(response.data);
         } catch (err) {
@@ -485,7 +489,11 @@ This site is not affiliated.
         });
         try {
             let payload = this.state.opener;
-            const response = await axios.post(this.backEndUrl() + `api/play`, payload);
+            let url = this.backEndUrl() + `api/play`;
+
+            console.log("target:", url);
+
+            const response = await axios.post(url, payload);
             this.setState({gameplay: response.data});
             this.updateStats(response.data);
         } catch (err) {
@@ -597,15 +605,8 @@ This site is not affiliated.
     }
 
     backEndUrl() {
-
         console.log(process.env);
-
-        let color = process.env.REACT_APP_COLOR;
-        if (color === undefined) {
-            return "http://host.docker.internal/";
-        } else {
-            return "http://flashcards.charles.uno/" + color + "/"
-        }
+        return "/" + process.env.REACT_APP_COLOR + "/";
     }
 
 }

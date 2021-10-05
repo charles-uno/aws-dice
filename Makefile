@@ -1,22 +1,20 @@
+COLOR := green
 
-# Copy the repo over as-is
+# Create a local deployment that mimics what we do on AWS
 local:
 	rm -rf blue-green ||:
 	mkdir -p blue-green/workdir
-	# takes a bit because of the node modules
 	cp -r app lb scripts blue-green/workdir/
+	cp scripts/$(COLOR).env blue-green/.env
+	echo "REACT_APP_LOCAL=true" >> blue-green/.env
 
-# Move files into place for this deployment (blue or green)
-install:
-	cd blue-green/workdir && ./scripts/install.sh
-
-# Build docker images
+# Build and push images, move files into place
 build:
 	cd blue-green/workdir && ./scripts/build.sh
 
 # Launch services on dev endpoint
-refresh:
-	cd blue-green/workdir && ./scripts/refresh.sh
+deploy:
+	cd blue-green/workdir && ./scripts/deploy.sh
 
 # Test services on dev endpoint
 test:
@@ -25,3 +23,7 @@ test:
 # Promote dev to main
 promote:
 	cd blue-green/workdir && ./scripts/promote.sh
+
+down:
+	cd blue-green/$COLOR/app && docker-compose down
+	cd blue-green/$COLOR/lb && docker-compose down

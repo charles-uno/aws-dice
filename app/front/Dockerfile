@@ -7,7 +7,7 @@ RUN apk update && apk add --no-cache --virtual build-deps \
 WORKDIR /app
 COPY app /app
 RUN npm install axios node-sass react-google-charts dotenv --save
-RUN npm run build && npm install -g serve
 COPY ./.env /app/.env
+RUN npm run build && npm install -g serve
 EXPOSE 5000
 CMD ["serve", "-s", "build"]

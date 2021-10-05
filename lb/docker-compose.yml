@@ -7,4 +7,4 @@ services:
     - "80:80"
     - "443:443"
     volumes:
-    - "${PWD}/nginx/${COLOR}.conf:/etc/nginx/conf.d/default.conf"
+    - "${PWD}/nginx.conf:/etc/nginx/conf.d/default.conf"

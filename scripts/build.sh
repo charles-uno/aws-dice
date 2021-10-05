@@ -2,9 +2,14 @@
 
 set -e
 
-cd app/
-ENV_FILE=./.env
+# If we don't have a color in place, pick one
+ENV_FILE=../.env
+if [[ ! -f "$ENV_FILE" ]]; then
+    echo "no color found, defaulting to blue"
+    cp scripts/blue.env "$ENV_FILE"
+fi
 
+# Figure out which color we're installing
 source "$ENV_FILE"
 if [[ "$COLOR" == "" ]]; then
     echo "missing color!"
@@ -12,37 +17,19 @@ if [[ "$COLOR" == "" ]]; then
 fi
 echo "building: $COLOR"
 
-# Build and push the docker images
+# Make sure we always know what color we're deploying
+cp "$ENV_FILE" .
+cp "$ENV_FILE" app/
+cp "$ENV_FILE" lb/
 
-# If credentials aren't set, we're probably working locally on a machine that's
-# already logged in.
-if [[ "$DOCKER_PASS" != "" ]]; then
-    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-# We keep the Docker username as a secret for convenience, but it's not
-# actually sensitive information. It's hard-coded in a bunch of places.
-else
-    DOCKER_USER=charlociraptor
-fi
-
-STAMP=$(date +%s)
-
-DOCKER_DIRS=$(ls */Dockerfile | cut -d '/' -f 1)
-for DIR in $DOCKER_DIRS; do
-    # Optionally, target names can be given. In that case, only build those
-    if [[ "$@" != "" && "$@" != *$DIR* ]]; then
-        echo "$DIR : skipping"
-        continue
-    fi
-    echo "$DIR : building..."
-    cp "$ENV_FILE" "$DIR/"
-    SERVICE_NAME="$DIR"
-    IMAGE_NAME="$DOCKER_USER/flashcards-$SERVICE_NAME-$COLOR"
-    if ! docker build "$DIR" -f "$DIR/Dockerfile" -t "$IMAGE_NAME:$STAMP"; then
-        echo "$DIR : docker build failed"
-        exit 1
-    fi
-    echo "$DIR : pushing..."
-    docker tag "$IMAGE_NAME:$STAMP" "$IMAGE_NAME:latest"
-    docker push "$IMAGE_NAME:$STAMP"
-    docker push "$IMAGE_NAME:latest"
+# Build actually happens in the workdir
+for DIR in app lb; do
+    make --directory "$DIR" build
 done
+
+# Move our content over to the appropriate color directory for launch
+rm -rf ../"$COLOR"
+mkdir -p ../"$COLOR"
+cp -r ./* ../"$COLOR"
+
+# TODO: load balancer should be handled outside app deployment

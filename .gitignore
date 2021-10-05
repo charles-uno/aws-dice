@@ -10,3 +10,4 @@ data/*
 *.pem
 blue-green
 .env
+nginx.conf
