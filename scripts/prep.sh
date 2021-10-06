@@ -15,21 +15,17 @@ if [[ "$COLOR" == "" ]]; then
     echo "missing color!"
     exit 1
 fi
-echo "building: $COLOR"
+
+echo "prepping: $COLOR"
 
 # Make sure we always know what color we're deploying
 cp "$ENV_FILE" .
 cp "$ENV_FILE" app/
 cp "$ENV_FILE" lb/
 
-# Build actually happens in the workdir
-for DIR in app lb; do
-    make --directory "$DIR" build
-done
-
 # Move our content over to the appropriate color directory for launch
-rm -rf ../"$COLOR"
-mkdir -p ../"$COLOR"
-cp -r ./* ../"$COLOR"
-
-# TODO: load balancer should be handled outside app deployment
+cd ..
+rm -rf "./$COLOR"
+mv workdir "$COLOR"
+# Set up a soft link so we can continue to launch scripts from workdir
+ln -s "$PWD/$COLOR" workdir
