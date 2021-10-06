@@ -10,6 +10,14 @@ local:
 
 # Move files into place
 prep:
+	# If we don't have a color, start with blue
+	cd $(WORKDIR) && ls ../.env || cp scripts/blue.env ../.env
+	# Make sure we always know what color we're deploying
+	cd $(WORKDIR) && cp ../.env .
+	cd $(WORKDIR) && cp .env app/
+	cd $(WORKDIR) && cp .env lb/
+
+
 	cd $(WORKDIR) && ./scripts/prep.sh
 
 # Build and push docker images
