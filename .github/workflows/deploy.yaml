@@ -25,7 +25,14 @@ jobs:
         key: ${{secrets.AWS_KEY}}
         source: "app,lb,scripts,Makefile"
         target: "~/blue-green/workdir/"
-    - name: prep blue/greenn workdir
+    - name: ensure env is present
+      uses: fifsky/ssh-action@master
+      with:
+        command: cd blue-green && ls .env || cp workdir/scripts/blue.env .env
+        host: ${{secrets.AWS_ADDRESS}}
+        user: ec2-user
+        key: ${{secrets.AWS_KEY}}
+    - name: prep blue/green workdir
       uses: fifsky/ssh-action@master
       with:
         command: cd blue-green/workdir && make prep

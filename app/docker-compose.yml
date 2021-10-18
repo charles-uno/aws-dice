@@ -1,14 +1,14 @@
 version: "3.9"
 services:
   frontend:
-    image: charlociraptor/flashcards-front-${COLOR}
+    image: ${REGISTRY}/flashcards-front-${COLOR}
     restart: always
     ports:
     - "${PORT_FRONT}:5000"
     depends_on:
     - backend
   backend:
-    image: charlociraptor/flashcards-back-${COLOR}
+    image: ${REGISTRY}/flashcards-back-${COLOR}
     restart: always
     ports:
     - "${PORT_BACK}:5001"

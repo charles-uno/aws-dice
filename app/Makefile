@@ -1,26 +1,29 @@
 COLOR := $(shell grep COLOR .env | head -n 1 | cut -d = -f 2)
 STAMP := $(shell date +%s)
-DOCKER_USER := charlociraptor
-DOCKER_DIRS := $(shell ls */Dockerfile | cut -d '/' -f 1)
+REGISTRY := $(shell grep REGISTRY .env | head -n 1 | cut -d = -f 2)
+DIRS := $(shell ls */Dockerfile | cut -d '/' -f 1)
+# DOCKER_USER := charlociraptor
 
-build: $(DOCKER_DIRS)
+build: $(DIRS)
 
-$(DOCKER_DIRS):: docker-login
+$(DIRS):: #docker-login
 	# In case a service needs to know what color it is
 	cp .env $@/
-	cd $@ && docker build . -f Dockerfile -t $(DOCKER_USER)/flashcards-$@-$(COLOR):$(STAMP)
-	docker tag $(DOCKER_USER)/flashcards-$@-$(COLOR):$(STAMP) $(DOCKER_USER)/flashcards-$@-$(COLOR):latest
-	docker push $(DOCKER_USER)/flashcards-$@-$(COLOR):$(STAMP)
-	docker push $(DOCKER_USER)/flashcards-$@-$(COLOR):latest
+	cd $@ && docker build . -f Dockerfile -t $(REGISTRY)/flashcards-$@-$(COLOR):$(STAMP)
+	docker tag $(REGISTRY)/flashcards-$@-$(COLOR):$(STAMP) $(REGISTRY)/flashcards-$@-$(COLOR):latest
+	docker push $(REGISTRY)/flashcards-$@-$(COLOR):$(STAMP)
+	docker push $(REGISTRY)/flashcards-$@-$(COLOR):latest
 
 # If credentials aren't set, we're probably working locally on a machine that's
 # already logged in.
-docker-login:
-	@[[ -z "$(DOCKER_PASS)" ]] || echo $(DOCKER_PASS) | docker login -u $(DOCKER_USER) --password-stdin
+#docker-login:
+#	@[[ -z "$(DOCKER_PASS)" ]] || echo $(DOCKER_PASS) | docker login -u $(DOCKER_USER) --password-stdin
 
 deploy:
-	cd front && make deploy
-	cd back && make deploy
+	# docker system prune -af
+	docker-compose pull
+	docker-compose down ||:
+	docker-compose up -d
 
 test:
 	cd back && make test

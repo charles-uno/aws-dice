@@ -1,8 +1,2 @@
-deploy:
-	# docker system prune -af
-	docker-compose pull
-	docker-compose down ||:
-	docker-compose up -d
-
 test:
 	source ../.env && export PORT_BACK && pytest tests/cases.tavern.yaml
