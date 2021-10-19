@@ -17,7 +17,7 @@ jobs:
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
         key: ${{secrets.AWS_KEY}}
-    - name: copy repo over to aws
+    - name: copy files over to aws
       uses: appleboy/scp-action@master
       with:
         host: ${{secrets.AWS_ADDRESS}}
@@ -44,14 +44,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: copy_files
     steps:
+    - name: ensure local docker registry is running
+      uses: fifsky/ssh-action@master
+      with:
+        command: cd blue-green/workdir && make registry
+        host: ${{secrets.AWS_ADDRESS}}
+        user: ec2-user
+        key: ${{secrets.AWS_KEY}}
     - name: build and push images
       uses: fifsky/ssh-action@master
-      env:
-        DOCKER_PASS: ${{secrets.DOCKER_PASS}}
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
       with:
-        # We get a warning about this option, but it seems to work
-        envs: DOCKER_USER,DOCKER_PASS
         command: cd blue-green/workdir && make build
         host: ${{secrets.AWS_ADDRESS}}
         user: ec2-user
