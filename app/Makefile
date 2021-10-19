@@ -17,7 +17,7 @@ deploy:
 	# docker system prune -af
 	docker-compose pull
 	docker-compose down ||:
-	docker-compose up -d
+	docker-compose -p $(COLOR) up -d
 
 test:
 	cd back && make test

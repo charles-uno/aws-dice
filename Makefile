@@ -7,10 +7,10 @@ OTHER_COLOR := $(shell cd $(BGDIR) && grep OTHER .env | head -n 1 | cut -d = -f 
 
 # Create a local deployment that mimics what we do on AWS
 local:
-	rm -rf blue-green/{blue,green,workdir} ||:
+	rm -rf blue-green/workdir ||:
 	mkdir -p blue-green/workdir
 	rsync -r --exclude node_modules Makefile app lb scripts blue-green/workdir
-	cd blue-green && cp workdir/scripts/blue.env .env
+	if [[ "$(COLOR)" == "" ]]; then cd blue-green && cp workdir/scripts/blue.env .env; fi
 
 # Figure out color, move things into place, get ready to build
 prep:
