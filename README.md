@@ -44,31 +44,33 @@ re-build repeatedly.
 cd front/app
 npm start
 ```
-To run the whole app, we need to build our images and push them to `docker.io`:
+
+To run the whole app, you'll need to have Docker and Docker Compose installed.
+The commands below will imitate the GitHub Actions deployment locally:
 ```
-export DOCKER_USER=...
-export DOCKER_PASS=...
-scripts/build.sh
+make local
+make registry
+make prep
+make build
+make deploy
+make test
+make promote
 ```
-Then pull them back down with Docker Compose. Notably, `DOCKER_USER` above must
-match the username in `docker-compose.yml`
-```
-docker-compose pull
-docker-compose up
-```
-A heads up, though: we're not yet set up to handle branches. Docker Compose
-will pull down whatever image was pushed most recently. If you need to run
-`docker-compose pull` manually in production, make sure that the `main` branch
-is the last one to have been built.
+
+## Blue Green Deployment
+
+These commands can then be repeated to see blue and green deployments running in
+parallel. 
 
 ## To Do
 
-Add a [badge][status_badge] for workflow status.
+- Update the "read more" to talk about blue/green deployment.
+- Store "read more" as text or Markdown. Parse links dynamically.
+- Refactor the React code into multiple files for legibility and maintenance.
+- Add API tests, probably in Tavern.
+- Add React tests. Unit for sure, integration would be nice too.
+- Add a [badge][status_badge] for workflow status.
+- Get HTTPS up and running, probably via [Certbot][certbot].
 
 [status_badge]: https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge
-
-HTTPS is a work in progress. AWS suggests setting up a load balancer in the GUI to enable HTTPS. We're
-working on getting Certbot running alongside nginx instead. More information:
-
-- [SSL/TLS certificates in Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/understanding-tls-ssl-certificates-in-lightsail-https)
-- [Certbot Rate Limits](https://letsencrypt.org/docs/rate-limits/)
+- [certbot](https://letsencrypt.org/docs/rate-limits/)
