@@ -41,7 +41,7 @@ machine. Running directly on the machine (rather than inside a container)
 allows changes to show up automatically while you work, rather than needing to
 re-build repeatedly.
 ```
-cd front/app
+cd app/front/app
 npm start
 ```
 
@@ -49,7 +49,6 @@ To run the whole app, you'll need to have Docker and Docker Compose installed.
 The commands below will imitate the GitHub Actions deployment locally:
 ```
 make local
-make registry
 make prep
 make build
 make deploy
@@ -60,12 +59,12 @@ make promote
 ## Blue Green Deployment
 
 These commands can then be repeated to see blue and green deployments running in
-parallel. 
+parallel.
 
 ## To Do
 
 - Update the "read more" to talk about blue/green deployment.
-- Store "read more" as text or Markdown. Parse links dynamically.
+- Store "read more" as text or Markdown. Parse autocard links dynamically.
 - Refactor the React code into multiple files for legibility and maintenance.
 - Add API tests, probably in Tavern.
 - Add React tests. Unit for sure, integration would be nice too.

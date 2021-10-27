@@ -4,6 +4,7 @@ BGDIR := $(shell cd blue-green 2>/dev/null; pwd)
 WORKDIR := $(BGDIR)/workdir
 COLOR := $(shell cd $(BGDIR) && grep COLOR .env | head -n 1 | cut -d = -f 2)
 OTHER_COLOR := $(shell cd $(BGDIR) && grep OTHER .env | head -n 1 | cut -d = -f 2)
+TIMESTAMP := $(shell date +%s)
 
 # Create a local deployment that mimics what we do on AWS
 local:
@@ -15,6 +16,7 @@ local:
 # Figure out color, move things into place, get ready to build
 prep:
 	# Make sure we always know what color we're deploying
+	cd $(BGDIR) && echo "TIMESTAMP=$(TIMESTAMP)" >> .env
 	cd $(BGDIR) && cp .env workdir/ && cp .env workdir/app/ && cp .env lb/
 	# Make sure we have a load balancer set up outside the color dirs
 	cd $(BGDIR) && mkdir -p lb
