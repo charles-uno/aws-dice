@@ -51,7 +51,6 @@ promote:
 	cd $(BGDIR) && cp workdir/scripts/$(OTHER_COLOR).env .env
 	cd $(BGDIR) && cp workdir/scripts/$(OTHER_COLOR).env lb/.env
 	cd $(BGDIR)/lb && make refresh
-	exit 1
 
 down:
 	cd $(WORKDIR)/app && make down

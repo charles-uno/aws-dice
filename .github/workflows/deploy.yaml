@@ -23,7 +23,7 @@ jobs:
         host: ${{secrets.AWS_ADDRESS}}
         username: ec2-user
         key: ${{secrets.AWS_KEY}}
-        source: "app,lb,scripts,Makefile"
+        source: "app,lb,scripts,tests,Makefile"
         target: "~/blue-green/workdir/"
     - name: ensure env is present
       uses: fifsky/ssh-action@master
