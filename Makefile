@@ -44,7 +44,7 @@ deploy:
 
 # Test services on dev endpoint
 test:
-	cd $(BGDIR)/app && make test
+	cd $(WORKDIR)/app && make test
 
 # Promote dev to main
 promote:
