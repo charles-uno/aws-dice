@@ -17,7 +17,7 @@ local:
 prep:
 	# Make sure we always know what color we're deploying
 	cd $(BGDIR) && echo "TIMESTAMP=$(TIMESTAMP)" >> .env
-	cd $(BGDIR) && cp .env workdir/ && cp .env workdir/app/ && cp .env lb/
+	cd $(BGDIR) && cp .env workdir/.env && cp .env workdir/app/.env && cp .env lb/.env
 	# Make sure we have a load balancer set up outside the color dirs
 	cd $(BGDIR) && mkdir -p lb
 	cd $(BGDIR) && cp -r workdir/lb/* lb/
