@@ -63,6 +63,7 @@ parallel.
 
 ## To Do
 
+- Handling for adding keys to `.env`
 - Update the "read more" to talk about blue/green deployment.
 - Store "read more" as text or Markdown. Parse autocard links dynamically.
 - Refactor the React code into multiple files for legibility and maintenance.
