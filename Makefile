@@ -50,7 +50,7 @@ test:
 promote:
 	cd $(BGDIR) && cp workdir/scripts/$(OTHER_COLOR).env .env
 	cd $(BGDIR) && cp workdir/scripts/$(OTHER_COLOR).env lb/.env
-	cd $(BGDIR)/lb && make promote
+	cd $(BGDIR)/lb && make refresh
 
 down:
 	cd $(WORKDIR)/app && make down

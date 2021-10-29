@@ -15,10 +15,8 @@ deploy-impl:
 	docker-compose down ||:
 	docker-compose up -d
 
-# After tests, we want to swap the newly deployed content from dev to main
-promote:
-	cp $(OTHER_COLOR).conf nginx.conf
-	sleep 5
+refresh:
+	cp $(COLOR).conf nginx.conf
 	docker exec $(CONTAINER_NAME) service nginx reload
 
 down:
