@@ -15,7 +15,8 @@ local:
 
 # Figure out color, move things into place, get ready to build
 prep:
-	# Make sure we always know what color we're deploying
+	# Grab the most recent version of the color config in case of added keys
+	cd $(WORKDIR) && cp scripts/$(COLOR).env ..
 	cd $(BGDIR) && echo "TIMESTAMP=$(TIMESTAMP)" >> .env
 	cd $(BGDIR) && mkdir -p lb/
 	cd $(BGDIR) && cp .env workdir/ && cp .env workdir/app/ && cp .env lb/
@@ -43,7 +44,6 @@ deploy:
 
 # Test services on dev endpoint
 test:
-	cd $(WORKDIR) && ./tests/env-consistency.sh
 	cd $(BGDIR)/app && make test
 
 # Promote dev to main
