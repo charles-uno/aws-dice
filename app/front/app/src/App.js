@@ -68,6 +68,12 @@ class Flashcards extends React.Component {
     }
 
     renderAbout() {
+        let color = process.env.REACT_APP_COLOR;
+        let timestamp = process.env.REACT_APP_TIMESTAMP;
+        // JS does dates in ms
+        let date = new Date(parseInt(timestamp)*1000);
+        let date_str = date.toISOString().slice(0, 16).replace("T", " at ") + " UTC";
+
         return <div className="justify section" key="about">
 <h2 key="model-head">About the Model</h2>
 <p className="about" key="model-0">

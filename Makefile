@@ -17,7 +17,7 @@ local:
 prep:
 	# Grab the most recent version of the color config in case of added keys
 	cd $(WORKDIR) && cp scripts/$(COLOR).env ..
-	cd $(BGDIR) && echo "TIMESTAMP=$(TIMESTAMP)" >> .env
+	cd $(BGDIR) && echo "REACT_APP_TIMESTAMP=$(TIMESTAMP)" >> .env
 	cd $(BGDIR) && mkdir -p lb/
 	cd $(BGDIR) && cp .env workdir/ && cp .env workdir/app/ && cp .env lb/
 	# Make sure we have a load balancer set up outside the color dirs
