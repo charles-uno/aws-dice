@@ -48,6 +48,7 @@ npm start
 To run the whole app, you'll need to have Docker and Docker Compose installed.
 The commands below will imitate the GitHub Actions deployment locally:
 ```
+make registry
 make local
 make prep
 make build
@@ -73,4 +74,4 @@ parallel.
 - Get HTTPS up and running, probably via [Certbot][certbot].
 
 [status_badge]: https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge
-- [certbot](https://letsencrypt.org/docs/rate-limits/)
+[certbot]: https://letsencrypt.org/docs/rate-limits/
