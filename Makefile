@@ -30,7 +30,7 @@ prep:
 	ln -s $(BGDIR)/$(COLOR) $(WORKDIR)
 
 registry:
-	docker ps | grep 'registry' || docker run -d --name registry --restart always -p 5000:5000 registry:2
+	docker ps | grep 'registry' || docker run -d --name registry --restart always -p 5555:5000 registry:2
 
 # Build and push docker images
 build:
